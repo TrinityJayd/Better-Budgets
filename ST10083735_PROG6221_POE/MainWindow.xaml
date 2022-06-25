@@ -171,7 +171,7 @@
             <Image x:Name="fuelpbx" Height="52" Canvas.Left="32" Canvas.Top="443" Width="51" Source="/fuel-icon.png"/>
             <Image x:Name="cellpbx" Height="52" Canvas.Left="32" Canvas.Top="516" Width="51" Source="/phone-icon.png"/>
             <Label x:Name="otherpbx" Content="R" Height="52" Canvas.Left="33" Canvas.Top="589" Width="51" FontSize="24" FontWeight="Bold" Foreground="#FF60B64F" Background="#FFF2F2F2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" RenderTransformOrigin="0.62,0.622"/>
-            <Image x:Name="nextpbx" Height="41" Canvas.Left="553" Canvas.Top="676" Width="39" Source="/next-icon.png" MouseDown="editOtherpbx_MouseDown"/>
+            <Image x:Name="nextpbx" Height="41" Canvas.Left="553" Canvas.Top="676" Width="39" Source="/next-icon.png" MouseDown="nextpbx_MouseDown"/>
             <Label x:Name="expenseErrorlb" Content="There are errors with you amounts please try again.&#10;All decimals must use a period (.) &#10;and no spaces are allowed." Canvas.Left="33" Canvas.Top="658" Height="77" FontSize="16" Visibility="Hidden"/>
         </Canvas>
     </Grid>

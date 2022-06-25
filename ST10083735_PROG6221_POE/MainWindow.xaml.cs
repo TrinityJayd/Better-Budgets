@@ -20,14 +20,69 @@ namespace ST10083735_PROG6221_POE
     /// </summary>
     public partial class MainWindow : Window
     {
+        //This dictionary contains the expenses the user inputs as well as the names of the expenses
+        Dictionary<string, double> expenses = new Dictionary<string, double>();
+
         //Create an object of the validation class
         ValidationMethods newData = new ValidationMethods();
+
+        //Create objects tof the different expense classes
+        IncomeTax addIncome = new IncomeTax(0, 0);
+        HomeLoan addBuyingExpense = new HomeLoan(0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Rent addRentExpense = new Rent(0, 0, 0, 0, 0, 0);
+        Vehicle addVehicle = new Vehicle("", 0, 0, 0, 0); 
 
         public MainWindow()
         {
             InitializeComponent();
             mainpnl.Visibility = Visibility.Visible;
             homepnl.Visibility = Visibility.Hidden;
+        }
+
+
+        private void nextpbx_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            double income = 0;
+            double tax = 0;
+
+            //Check if the decimal inputs are valid
+            bool incomeValid = newData.isDecimalValid(incometxt.Text);
+
+            bool taxValid = newData.isDecimalValid(taxtxt.Text);
+
+            bool groceriesValid = newData.isDecimalValid(groceriestxt.Text);
+
+            bool waterValid = newData.isDecimalValid(watertxt.Text);
+
+            bool travelValid = newData.isDecimalValid(traveltxt.Text);
+
+            bool otherValid = newData.isDecimalValid(othertxt.Text);
+
+            bool cellValid = newData.isDecimalValid(celltxt.Text);
+
+
+
+            //If all values are valid in their format then store them in variables
+            if (incomeValid & taxValid & waterValid & travelValid & otherValid & cellValid & groceriesValid)
+            {
+                income = Convert.ToDouble(incometxt.Text);
+                tax = Convert.ToDouble(taxtxt.Text);
+
+                //Display the accomodation panelso the user can input values
+                expenseErrorlb.Visibility = Visibility.Hidden;
+                expensepnl.Visibility = Visibility.Hidden;
+                //accomodationpnl.Visible = true;
+            }
+            else
+            {
+                //Display an error if the values are in the incorrect format.
+                expenseErrorlb.Visibility = Visibility.Visible;
+
+            }
+
+            //Send values to the Income constructor
+            addIncome = new IncomeTax(income, tax);
+
         }
 
         private void startbtn_Click(object sender, RoutedEventArgs e)
@@ -171,5 +226,7 @@ namespace ST10083735_PROG6221_POE
         {
             enterAmount(e, otherCostlb, othertxt);
         }
+
+        
     }
 }
