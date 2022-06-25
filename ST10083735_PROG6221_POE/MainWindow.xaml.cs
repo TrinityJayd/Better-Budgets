@@ -23,6 +23,15 @@ namespace ST10083735_PROG6221_POE
         public MainWindow()
         {
             InitializeComponent();
+            mainpnl.Visibility = Visibility.Visible;
+            homepnl.Visibility = Visibility.Hidden;
+        }
+
+        private void startbtn_Click(object sender, RoutedEventArgs e)
+        {
+            mainpnl.Visibility = Visibility.Hidden;
+            homepnl.Visibility = Visibility.Visible;
+
         }
     }
 }
