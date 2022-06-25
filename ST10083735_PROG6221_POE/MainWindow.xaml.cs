@@ -227,6 +227,10 @@ namespace ST10083735_PROG6221_POE
             enterAmount(e, otherCostlb, othertxt);
         }
 
-        
+        private void expenseFormpb_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            homepnl.Visibility = Visibility.Hidden;
+            expensepnl.Visibility = Visibility.Visible;
+        }
     }
 }

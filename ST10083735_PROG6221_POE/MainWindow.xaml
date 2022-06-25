@@ -108,7 +108,7 @@
             </RichTextBox>
             <Image x:Name="exitimg" Height="49" Canvas.Left="542" Canvas.Top="675" Width="49" Source="/exit-icon.png" MouseDown="exitimg_MouseDown" RenderTransformOrigin="0.62,0.789"/>
             <Image Height="49" Canvas.Left="24" Canvas.Top="677" Width="49" Source="/home-icon.png" RenderTransformOrigin="0.492,0.482"/>
-            <Image Height="49" Canvas.Left="282" Canvas.Top="678" Width="50" Source="/coin-icon.png" RenderTransformOrigin="0.384,-0.034"/>
+            <Image x:Name="expenseFormpb" Height="49" Canvas.Left="282" Canvas.Top="678" Width="50" Source="/coin-icon.png" RenderTransformOrigin="0.384,-0.034" MouseDown="expenseFormpb_MouseDown"/>
         </Canvas>
         <Canvas x:Name="notificationpnl" HorizontalAlignment="Left" Height="745" Margin="24,18,0,0" VerticalAlignment="Top" Width="622" Visibility="Hidden" Grid.ColumnSpan="3">
             <Label x:Name="notificationlb" Content="Notifications" Height="40" Canvas.Left="24" Canvas.Top="10" Width="200" FontSize="30" FontWeight="Normal"/>
@@ -133,7 +133,7 @@
             </RichTextBox>
 
         </Canvas>
-        <Canvas x:Name="expensepnl" Grid.Column="2" HorizontalAlignment="Left" Height="745" Margin="639,0,0,0" VerticalAlignment="Center" Width="622">
+        <Canvas x:Name="expensepnl" HorizontalAlignment="Left" Height="745" Margin="36,18,0,0" VerticalAlignment="Top" Width="622" Grid.ColumnSpan="3" Visibility="Hidden">
             <Label x:Name="incomelb" Content="Income" Height="40" Canvas.Left="10" Canvas.Top="10" Width="137" FontSize="30" FontWeight="Normal"/>
             <Label x:Name="expenselb" Content="Expenses" Height="51" Canvas.Left="10" Canvas.Top="151" Width="156" FontSize="30" FontWeight="Normal"/>
             <Label x:Name="randlb" Content="R" Height="52" Canvas.Left="32" Canvas.Top="82" Width="51" FontSize="24" FontWeight="Bold" Foreground="#FF60B64F" Background="#FFF2F2F2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" RenderTransformOrigin="0.62,0.622"/>
