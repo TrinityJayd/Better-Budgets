@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="coin-icon.png" />
+    <None Remove="Currency_Flatline.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="coin-icon.png" />
+    <Resource Include="Currency_Flatline.png" />
+  </ItemGroup>
+
+</Project>

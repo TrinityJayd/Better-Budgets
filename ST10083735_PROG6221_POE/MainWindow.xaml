@@ -1,0 +1,40 @@
+﻿<Window x:Class="ST10083735_PROG6221_POE.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ST10083735_PROG6221_POE"
+        mc:Ignorable="d"
+        Title="Better Budgets" Height="769" Width="565" FontFamily="Verdana" FontSize="14" ResizeMode="NoResize" Icon="/coin-icon.png" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="mainFrm" Margin="0,0,0,33">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="42*"/>
+            <ColumnDefinition Width="523*"/>
+        </Grid.ColumnDefinitions>
+        <Canvas Margin="24,21,10,32" Grid.ColumnSpan="2">
+            <Image Height="506" Canvas.Top="-8" Width="509" Source="/Currency_Flatline.png" Stretch="UniformToFill"/>
+            <Label Content="Better Budgets" Height="55" Canvas.Left="110" Canvas.Top="446" Width="289" FontFamily="Verdana" FontSize="36" />
+            <TextBlock Height="51" Canvas.Left="103" Canvas.Top="518" Text="Save more money by spending more consciously today." TextWrapping="Wrap" Width="303" TextAlignment="Center" LineStackingStrategy="BlockLineHeight" LineHeight="23" FontSize="20" FontFamily="Calibri Light"/>
+
+            <!--Code Attribution
+            Author: Crandel
+            Link: https://stackoverflow.com/questions/6745663/how-to-create-make-rounded-corner-buttons-in-wpf -->
+
+            <Button Style="{DynamicResource RoundButton}" Content="Button" Height="47" Canvas.Left="164" Canvas.Top="606" Width="201" Background="#FF60B64F" >
+                <Button.Resources>
+                    <Style TargetType="Button" x:Key="RoundButton">
+                        <Style.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15" />
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <!--End-->
+        </Canvas>
+    </Grid>
+
+
+</Window>
