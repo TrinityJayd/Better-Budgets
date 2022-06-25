@@ -33,5 +33,17 @@ namespace ST10083735_PROG6221_POE
             homepnl.Visibility = Visibility.Visible;
 
         }
+
+        private void searchBarbtn_Click(object sender, RoutedEventArgs e)
+        {
+            searchtxt.Visibility = Visibility.Visible;
+            searchtxt.Focus();
+            searchBarbtn.IsEnabled = false;
+        }
+
+        private void exitimg_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
     }
 }

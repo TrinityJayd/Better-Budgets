@@ -7,13 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="bell-icon.png" />
     <None Remove="coin-icon.png" />
     <None Remove="Currency_Flatline.png" />
+    <None Remove="exit-icon.png" />
+    <None Remove="home-icon.png" />
+    <None Remove="search-icon.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="bell-icon.png" />
     <Resource Include="coin-icon.png" />
     <Resource Include="Currency_Flatline.png" />
+    <Resource Include="exit-icon.png" />
+    <Resource Include="home-icon.png" />
+    <Resource Include="search-icon.png" />
   </ItemGroup>
 
 </Project>
