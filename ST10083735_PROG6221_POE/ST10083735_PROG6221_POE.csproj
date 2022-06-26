@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="back-icon.png" />
     <None Remove="bell-icon.png" />
     <None Remove="coin-icon.png" />
     <None Remove="Currency_Flatline.png" />
@@ -24,6 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Syncfusion.Shared.WPF" Version="20.1.0.61" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="back-icon.png" />
     <Resource Include="bell-icon.png" />
     <Resource Include="coin-icon.png" />
     <Resource Include="Currency_Flatline.png" />

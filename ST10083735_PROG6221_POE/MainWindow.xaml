@@ -1,9 +1,10 @@
-﻿<Window x:Name="main" x:Class="ST10083735_PROG6221_POE.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ST10083735_PROG6221_POE"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Name="main" x:Class="ST10083735_PROG6221_POE.MainWindow"
         mc:Ignorable="d"
         Title="Better Budgets" Height="794" Width="1458" FontFamily="Verdana" FontSize="14" ResizeMode="NoResize" Icon="/coin-icon.png" WindowStartupLocation="CenterScreen">
     <Grid x:Name="mainFrm" Margin="0,0,0,5">
@@ -17,6 +18,7 @@
             <Label x:Name="headinglb" Content="Better Budgets" Height="55" Canvas.Left="110" Canvas.Top="446" Width="289" FontFamily="Verdana" FontSize="36" />
             <TextBlock x:Name="subheadinglb" Height="51" Canvas.Left="103" Canvas.Top="518" Text="Save more money by spending more consciously today." TextWrapping="Wrap" Width="303" TextAlignment="Center" LineStackingStrategy="BlockLineHeight" LineHeight="23" FontSize="20" FontFamily="Calibri Light"/>
 
+            <!--End-->
             <!--Code Attribution
             Author: Microsoft DN
             Link: https://stackoverflow.com/questions/20073294/change-color-of-button-when-mouse-is-over
@@ -47,7 +49,6 @@
                 </Button.Resources>
             </Button>
 
-            <!--End-->
         </Canvas>
         <Canvas x:Name="homepnl" HorizontalAlignment="Left" Height="745" Margin="24,18,0,0" VerticalAlignment="Top" Width="634" Visibility="Visible" Grid.ColumnSpan="3">
             <Label x:Name="homelb" Content="Home" Height="40" Canvas.Left="24" Canvas.Top="10" Width="111" FontSize="30" FontWeight="Normal"/>
@@ -70,7 +71,7 @@
 
                 </Button.Resources>
             </Button>
-            <TextBox x:Name="searchtxt" Canvas.Left="58" Canvas.Top="100" Text=""  TextWrapping="Wrap" Width="274" Height="31" Background="#FFF2F2F2" Foreground="#FF60B64F" BorderThickness="0" BorderBrush="#FFF2F2F2" SelectionBrush="#FF1647CE" VerticalContentAlignment="Center" FontSize="16" Visibility="Hidden"/>
+            <TextBox x:Name="searchtxt" Canvas.Left="58" Canvas.Top="100" Text=""  TextWrapping="Wrap" Width="274" Height="31" Background="#FFF2F2F2" Foreground="#FF60B64F" BorderThickness="0" BorderBrush="#FFF2F2F2" SelectionBrush="#FF1647CE" VerticalContentAlignment="Center" FontSize="16" Visibility="Hidden" KeyDown="searchtxt_KeyDown"/>
             <Image x:Name="searchpbx" Height="43" Canvas.Left="377" Canvas.Top="94" Width="44" Source="/search-icon.png" RenderTransformOrigin="-0.178,0.505" MouseDown="searchpbx_MouseDown"/>
             <Label x:Name="summarylb" Content="Summary" Height="48" Canvas.Left="24" Canvas.Top="183" Width="171" FontSize="30" FontWeight="Normal"/>
             <Button Content="Low to High" Canvas.Left="337" Canvas.Top="197" Width="183" Height="34" Foreground="White" FontSize="16">
@@ -97,12 +98,12 @@
 
                 </Button.Resources>
             </Button>
-            <Label x:Name="summaryInfolb" Content="Income:&#10;Tax:&#10;Groceries:&#10;Water and lights:&#10;Travel:&#10;Cellphone/telephone:&#10;Other:" Height="302" Canvas.Left="24" Canvas.Top="247" Width="266" FontSize="22" FontFamily="Calibri Light" />
-            <Label x:Name="amountslb" Content="R0&#10;R0&#10;R0&#10;R0&#10;R0&#10;R0&#10;R0" Height="302" Canvas.Left="337" Canvas.Top="247" Width="266" FontSize="22" FontFamily="Calibri" FontWeight="Bold" Foreground="#FF60B64F" />
+            <Label x:Name="summaryInfolb" Content="Income:&#xA;Tax:&#xA;Groceries:&#xA;Water and lights:&#xA;Travel:&#xA;Cellphone/telephone:&#xA;Other:" Height="302" Canvas.Left="24" Canvas.Top="247" Width="266" FontSize="22" FontFamily="Calibri Light" />
+            <Label x:Name="amountslb" Content="R0&#xA;R0&#xA;R0&#xA;R0&#xA;R0&#xA;R0&#xA;R0" Height="302" Canvas.Left="337" Canvas.Top="247" Width="266" FontSize="22" FontFamily="Calibri" FontWeight="Bold" Foreground="#FF60B64F" />
             <RichTextBox x:Name="analysisCostsrtbx" Height="105" Canvas.Left="24" Canvas.Top="570" Width="496" BorderBrush="White" IsReadOnly="True" BorderThickness="0" FontFamily="Calibri Light" FontSize="22">
                 <FlowDocument>
                     <Paragraph>
-                        <Run Text="You have R0 left for the month.&#10;&#10;You have spent 0% of your income."/>
+                        <Run Text="You have R0 left for the month.&#xA;&#xA;You have spent 0% of your income."/>
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
@@ -118,7 +119,7 @@
             <Label x:Name="notiflb2" Content="Nothing here yet." Height="86" Canvas.Left="86" Canvas.Top="220" Width="414" FontFamily="Calibri" FontSize="20" Visibility="Collapsed"/>
             <Image x:Name="exitNotifpb" Height="49" Canvas.Left="544" Canvas.Top="675" Width="49" Source="/exit-icon.png" RenderTransformOrigin="0.62,0.789" MouseDown="exitNotifpb_MouseDown"/>
         </Canvas>
-        <Canvas x:Name="searchpnl" HorizontalAlignment="Left" Height="745" Margin="36,18,0,0" VerticalAlignment="Top" Width="622" Grid.ColumnSpan="3" Visibility="Hidden">
+        <Canvas x:Name="searchpnl" HorizontalAlignment="Left" Height="745" Margin="36,18,0,0" VerticalAlignment="Top" Width="622" Visibility="Hidden" Grid.ColumnSpan="3">
             <Label x:Name="resultslb" Content="Results for " Height="40" Canvas.Left="10" Canvas.Top="10" Width="580" FontSize="30" FontWeight="Normal" RenderTransformOrigin="4.778,1.607"/>
             <Image x:Name="searchResultspbx" Height="63" Canvas.Left="17" Canvas.Top="103" Width="71" Source="/search-icon.png"/>
             <Label x:Name="resultNamelb" Content="Results Text Here." Height="31" Canvas.Left="106" Canvas.Top="103" Width="323" FontSize="20"/>
@@ -131,6 +132,7 @@
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
+            <Label x:Name="noResultslb" Content="No results found." Height="31" Canvas.Left="24" Canvas.Top="67" Width="323" FontSize="20" Visibility="Hidden"/>
 
         </Canvas>
         <Canvas x:Name="expensepnl" HorizontalAlignment="Left" Height="745" Margin="36,18,0,0" VerticalAlignment="Top" Width="622" Grid.ColumnSpan="3" Visibility="Hidden">
@@ -172,40 +174,76 @@
             <Image x:Name="cellpbx" Height="52" Canvas.Left="32" Canvas.Top="516" Width="51" Source="/phone-icon.png"/>
             <Label x:Name="otherpbx" Content="R" Height="52" Canvas.Left="33" Canvas.Top="589" Width="51" FontSize="24" FontWeight="Bold" Foreground="#FF60B64F" Background="#FFF2F2F2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" RenderTransformOrigin="0.62,0.622"/>
             <Image x:Name="nextpbx" Height="41" Canvas.Left="553" Canvas.Top="676" Width="39" Source="/next-icon.png" MouseDown="nextpbx_MouseDown"/>
-            <Label x:Name="expenseErrorlb" Content="There are errors with you amounts please try again.&#10;All decimals must use a period (.) &#10;and no spaces are allowed." Canvas.Left="33" Canvas.Top="658" Height="77" FontSize="16" Visibility="Hidden"/>
+            <Label x:Name="expenseErrorlb" Content="There are errors with you amounts please try again.&#xA;All decimals must use a period (.) &#xA;and no spaces are allowed." Canvas.Left="33" Canvas.Top="658" Height="77" FontSize="16" Visibility="Hidden"/>
         </Canvas>
-        <Canvas x:Name="accomodationpnl" Grid.Column="2" HorizontalAlignment="Left" Height="745" Margin="602,18,0,0" VerticalAlignment="Top" Width="622">
+        <Canvas x:Name="accomodationpnl" HorizontalAlignment="Left" Height="745" Margin="36,18,0,0" VerticalAlignment="Top" Width="622" Grid.ColumnSpan="3" Visibility="Hidden">
             <Label x:Name="accomodationlb" Content="Accomodation" Canvas.Left="10" Canvas.Top="10" FontSize="30" FontWeight="Normal"/>
-            <RadioButton x:Name="rentgrp" Content="Renting" Height="25" Canvas.Left="38" Canvas.Top="87" Width="166" FontSize="16" GroupName="accomGrp"/>
-            <RadioButton x:Name="buygrp" Content="Buying" Height="25" Canvas.Left="228" Canvas.Top="87" Width="166" FontSize="16" GroupName="accomGrp"/>
+            <RadioButton x:Name="rentgrp" Content="Renting" Height="25" Canvas.Left="38" Canvas.Top="87" Width="166" FontSize="16" GroupName="accomGrp" Checked="rentgrp_Checked"/>
+            <RadioButton x:Name="buygrp" Content="Buying" Height="25" Canvas.Left="228" Canvas.Top="87" Width="166" FontSize="16" GroupName="accomGrp" Checked="buygrp_Checked"/>
             <Canvas x:Name="rentpnl" Height="118" Canvas.Left="19" Canvas.Top="136" Width="578" Visibility="Hidden">
                 <Image x:Name="rentpbx" Height="52" Canvas.Left="15" Canvas.Top="30" Width="51" Source="/rent-icon.png"/>
-                <TextBox x:Name="renttxt" Canvas.Left="84" Canvas.Top="64" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden"/>
+                <TextBox x:Name="renttxt" Canvas.Left="84" Canvas.Top="64" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden" KeyDown="renttxt_KeyDown"/>
                 <Label x:Name="rentlb" Content="Monthly rent" Canvas.Left="84" Canvas.Top="30" FontSize="16" Width="124"/>
-                <Image x:Name="editRentpbx" Height="41" Canvas.Left="529" Canvas.Top="35" Width="39" Source="/edit-icon.png" MouseDown="editCellpbx_MouseDown"/>
+                <Image x:Name="editRentpbx" Height="41" Canvas.Left="529" Canvas.Top="35" Width="39" Source="/edit-icon.png" MouseDown="editRentpbx_MouseDown"/>
                 <Label x:Name="rentCostlb" Content="R0" Canvas.Left="84" Canvas.Top="59" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
             </Canvas>
-            <Canvas x:Name="buypnl" Height="346" Canvas.Left="19" Canvas.Top="136" Width="578" Visibility="Visible">
+            <Canvas x:Name="buypnl" Height="346" Canvas.Left="19" Canvas.Top="136" Width="578" Visibility="Hidden">
                 <Image x:Name="buypbx1" Height="52" Canvas.Left="15" Canvas.Top="30" Width="51" Source="/rent-icon.png"/>
                 <Image x:Name="buypbx2" Height="52" Canvas.Left="15" Canvas.Top="108" Width="51" Source="/rent-icon.png"/>
                 <Image x:Name="buypbx3" Height="52" Canvas.Left="15" Canvas.Top="185" Width="51" Source="/rent-icon.png"/>
                 <Image x:Name="buypbx4" Height="52" Canvas.Left="15" Canvas.Top="269" Width="51" Source="/rent-icon.png"/>
-                <Image x:Name="editRentpbx_Copy" Height="40" Canvas.Left="518" Canvas.Top="36" Width="39" Source="/edit-icon.png" MouseDown="editCellpbx_MouseDown" RenderTransformOrigin="0.265,0.5"/>
-                <Image x:Name="editRentpbx_Copy1" Height="40" Canvas.Left="518" Canvas.Top="114" Width="39" Source="/edit-icon.png" MouseDown="editCellpbx_MouseDown" RenderTransformOrigin="0.265,0.5"/>
-                <Image x:Name="editRentpbx_Copy2" Height="40" Canvas.Left="518" Canvas.Top="191" Width="39" Source="/edit-icon.png" MouseDown="editCellpbx_MouseDown" RenderTransformOrigin="0.265,0.5"/>
-                <Image x:Name="editRentpbx_Copy3" Height="40" Canvas.Left="518" Canvas.Top="275" Width="39" Source="/edit-icon.png" MouseDown="editCellpbx_MouseDown" RenderTransformOrigin="0.265,0.5"/>
-                <TextBox x:Name="purchasetxt" Canvas.Left="87" Canvas.Top="56" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden"/>
-                <TextBox x:Name="deposittxt" Canvas.Left="87" Canvas.Top="134" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden"/>
-                <TextBox x:Name="interesttxt" Canvas.Left="87" Canvas.Top="211" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden"/>
+                <Image x:Name="editPurchasePricepbx" Height="40" Canvas.Left="518" Canvas.Top="36" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="editPurchasePricepbx_MouseDown"/>
+                <Image x:Name="editDepositpbx" Height="40" Canvas.Left="518" Canvas.Top="114" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="editDepositpbx_MouseDown"/>
+                <Image x:Name="editInterestpbx" Height="40" Canvas.Left="518" Canvas.Top="191" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="editInterestpbx_MouseDown"/>
+                <Image x:Name="editMonthspbx" Height="40" Canvas.Left="518" Canvas.Top="275" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="editMonthspbx_MouseDown"/>
+                <TextBox x:Name="purchasetxt" Canvas.Left="87" Canvas.Top="56" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden" KeyDown="purchasetxt_KeyDown"/>
+                <TextBox x:Name="deposittxt" Canvas.Left="87" Canvas.Top="134" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden" KeyDown="deposittxt_KeyDown"/>
                 <Label x:Name="purchasePricelb" Content="Purchase price" Canvas.Left="84" Canvas.Top="30" FontSize="16"/>
                 <Label x:Name="depositlb" Content="Total deposit" Canvas.Left="84" Canvas.Top="108" FontSize="16"/>
                 <Label x:Name="interestRatelb" Content="Interest rate" Canvas.Left="84" Canvas.Top="177" FontSize="16"/>
                 <Label x:Name="monthsToPaylb" Content="Months to repay between 240 - 360" Canvas.Left="84" Canvas.Top="266" FontSize="16"/>
-                <Label x:Name="rentCostlb_Copy" Content="R0" Canvas.Left="87" Canvas.Top="56" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
-                <Label x:Name="rentCostlb_Copy1" Content="R0" Canvas.Left="87" Canvas.Top="134" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
-                <Label x:Name="rentCostlb_Copy2" Content="0%" Canvas.Left="87" Canvas.Top="203" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
-                <Label x:Name="rentCostlb_Copy3" Content="240 months" Canvas.Left="91" Canvas.Top="292" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <Label x:Name="purchaseCostlb" Content="R0" Canvas.Left="87" Canvas.Top="56" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <Label x:Name="depositCostlb" Content="R0" Canvas.Left="87" Canvas.Top="134" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <Label x:Name="interestlb" Content="0%" Canvas.Left="87" Canvas.Top="203" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <Label x:Name="monthlb" Content="240 months" Canvas.Left="84" Canvas.Top="289" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <syncfusion:UpDown x:Name="monthspn" Height="23" Canvas.Left="91" NullValueText="240" Canvas.Top="295" Value="240" Width="73" FontSize="16" NumberDecimalDigits="0" NullValue="240" MinValue="240" MaxValue="360" Visibility="Hidden" KeyDown="monthspn_KeyDown"/>
+                <TextBox x:Name="interesttxt" Canvas.Left="91" Canvas.Top="211" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden" KeyDown="interesttxt_KeyDown"/>
             </Canvas>
+            <Label x:Name="choiceError" Content="Please select an accomodation type." Height="49" Canvas.Left="155" Canvas.Top="531" Width="306" FontSize="16" Visibility="Hidden"/>
+            <Label x:Name="accomErrorlb" Content="There are errors with you amounts please try again.&#xA;&#x09;All decimals must use a period (.)&#xA;&#x09;   and no spaces are allowed." Canvas.Left="95" Canvas.Top="556" Height="76" FontSize="16" Visibility="Hidden" />
+            <Image x:Name="previouspbx" Height="52" Canvas.Left="38" Canvas.Top="651" Width="51" Source="/back-icon.png" MouseDown="previouspbx_MouseDown"/>
+            <Image x:Name="nextpbx2" Height="52" Canvas.Left="528" Canvas.Top="651" Width="51" Source="/next-icon.png" MouseDown="nextpbx2_MouseDown"/>
+        </Canvas>
+        <Canvas x:Name="vehiclepnl" HorizontalAlignment="Left" Height="745" Margin="609,28,0,0" VerticalAlignment="Top" Width="622" Visibility="Visible" Grid.Column="2">
+            <Label x:Name="vehiclelb" Content="Vehicles" Canvas.Left="10" Canvas.Top="10" FontSize="30" FontWeight="Normal"/>
+            <RadioButton x:Name="yesrbtn" Content="Yes" Height="25" Canvas.Left="311" Canvas.Top="94" Width="105" FontSize="16" GroupName="carGrp" Checked="yesrbtn_Checked"/>
+            <RadioButton x:Name="norbtn" Content="No" Height="25" Canvas.Left="398" Canvas.Top="94" Width="90" FontSize="16" GroupName="carGrp" Checked="buygrp_Checked"/>
+            <Canvas x:Name="vehiclePurchasepnl" Height="346" Canvas.Left="19" Canvas.Top="136" Width="578" Visibility="Visible">
+                <Image x:Name="buypbx5" Height="52" Canvas.Left="15" Canvas.Top="30" Width="51" Source="/rent-icon.png"/>
+                <Image x:Name="buypbx6" Height="52" Canvas.Left="15" Canvas.Top="108" Width="51" Source="/rent-icon.png"/>
+                <Image x:Name="buypbx7" Height="52" Canvas.Left="15" Canvas.Top="185" Width="51" Source="/rent-icon.png"/>
+                <Image x:Name="buypbx8" Height="52" Canvas.Left="15" Canvas.Top="269" Width="51" Source="/rent-icon.png"/>
+                <Image x:Name="editPurchasePricepbx1" Height="40" Canvas.Left="518" Canvas.Top="36" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="editPurchasePricepbx_MouseDown"/>
+                <Image x:Name="editDepositpbx1" Height="40" Canvas.Left="518" Canvas.Top="114" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="editDepositpbx_MouseDown"/>
+                <Image x:Name="editInterestpbx1" Height="40" Canvas.Left="518" Canvas.Top="191" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="editInterestpbx_MouseDown"/>
+                <Image x:Name="editMonthspbx1" Height="40" Canvas.Left="518" Canvas.Top="275" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="editMonthspbx_MouseDown"/>
+                <TextBox x:Name="purchasetxt1" Canvas.Left="87" Canvas.Top="56" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden" KeyDown="purchasetxt_KeyDown"/>
+                <TextBox x:Name="deposittxt1" Canvas.Left="87" Canvas.Top="134" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden" KeyDown="deposittxt_KeyDown"/>
+                <Label x:Name="purchasePricelb1" Content="Purchase price" Canvas.Left="84" Canvas.Top="30" FontSize="16"/>
+                <Label x:Name="depositlb1" Content="Total deposit" Canvas.Left="84" Canvas.Top="108" FontSize="16"/>
+                <Label x:Name="interestRatelb1" Content="Interest rate" Canvas.Left="84" Canvas.Top="177" FontSize="16"/>
+                <Label x:Name="monthsToPaylb1" Content="Months to repay between 240 - 360" Canvas.Left="84" Canvas.Top="266" FontSize="16"/>
+                <Label x:Name="purchaseCostlb1" Content="R0" Canvas.Left="87" Canvas.Top="56" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <Label x:Name="depositCostlb1" Content="R0" Canvas.Left="87" Canvas.Top="134" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <Label x:Name="interestlb1" Content="0%" Canvas.Left="87" Canvas.Top="203" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <Label x:Name="monthlb1" Content="240 months" Canvas.Left="84" Canvas.Top="289" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <syncfusion:UpDown x:Name="monthspn1" Height="23" Canvas.Left="91" NullValueText="240" Canvas.Top="295" Value="240" Width="73" FontSize="16" NumberDecimalDigits="0" NullValue="240" MinValue="240" MaxValue="360" Visibility="Hidden" KeyDown="monthspn_KeyDown"/>
+                <TextBox x:Name="interesttxt1" Canvas.Left="91" Canvas.Top="211" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden" KeyDown="interesttxt_KeyDown"/>
+            </Canvas>
+            <Label x:Name="choiceError1" Content="Please select an accomodation type." Height="49" Canvas.Left="155" Canvas.Top="531" Width="306" FontSize="16" Visibility="Hidden"/>
+            <Label x:Name="accomErrorlb1" Content="There are errors with you amounts please try again.&#xA;&#x9;All decimals must use a period (.)&#xA;&#x9;   and no spaces are allowed." Canvas.Left="95" Canvas.Top="556" Height="76" FontSize="16" Visibility="Hidden" />
+            <Image x:Name="previouspbx1" Height="52" Canvas.Left="38" Canvas.Top="651" Width="51" Source="/back-icon.png" MouseDown="previouspbx_MouseDown"/>
+            <Label x:Name="choicelb" Content="Are you purchasing a vehicle?" Canvas.Left="12" Canvas.Top="86" FontSize="16"/>
         </Canvas>
     </Grid>
 
