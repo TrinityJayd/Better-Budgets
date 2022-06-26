@@ -174,6 +174,39 @@
             <Image x:Name="nextpbx" Height="41" Canvas.Left="553" Canvas.Top="676" Width="39" Source="/next-icon.png" MouseDown="nextpbx_MouseDown"/>
             <Label x:Name="expenseErrorlb" Content="There are errors with you amounts please try again.&#10;All decimals must use a period (.) &#10;and no spaces are allowed." Canvas.Left="33" Canvas.Top="658" Height="77" FontSize="16" Visibility="Hidden"/>
         </Canvas>
+        <Canvas x:Name="accomodationpnl" Grid.Column="2" HorizontalAlignment="Left" Height="745" Margin="602,18,0,0" VerticalAlignment="Top" Width="622">
+            <Label x:Name="accomodationlb" Content="Accomodation" Canvas.Left="10" Canvas.Top="10" FontSize="30" FontWeight="Normal"/>
+            <RadioButton x:Name="rentgrp" Content="Renting" Height="25" Canvas.Left="38" Canvas.Top="87" Width="166" FontSize="16" GroupName="accomGrp"/>
+            <RadioButton x:Name="buygrp" Content="Buying" Height="25" Canvas.Left="228" Canvas.Top="87" Width="166" FontSize="16" GroupName="accomGrp"/>
+            <Canvas x:Name="rentpnl" Height="118" Canvas.Left="19" Canvas.Top="136" Width="578" Visibility="Hidden">
+                <Image x:Name="rentpbx" Height="52" Canvas.Left="15" Canvas.Top="30" Width="51" Source="/rent-icon.png"/>
+                <TextBox x:Name="renttxt" Canvas.Left="84" Canvas.Top="64" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden"/>
+                <Label x:Name="rentlb" Content="Monthly rent" Canvas.Left="84" Canvas.Top="30" FontSize="16" Width="124"/>
+                <Image x:Name="editRentpbx" Height="41" Canvas.Left="529" Canvas.Top="35" Width="39" Source="/edit-icon.png" MouseDown="editCellpbx_MouseDown"/>
+                <Label x:Name="rentCostlb" Content="R0" Canvas.Left="84" Canvas.Top="59" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+            </Canvas>
+            <Canvas x:Name="buypnl" Height="346" Canvas.Left="19" Canvas.Top="136" Width="578" Visibility="Visible">
+                <Image x:Name="buypbx1" Height="52" Canvas.Left="15" Canvas.Top="30" Width="51" Source="/rent-icon.png"/>
+                <Image x:Name="buypbx2" Height="52" Canvas.Left="15" Canvas.Top="108" Width="51" Source="/rent-icon.png"/>
+                <Image x:Name="buypbx3" Height="52" Canvas.Left="15" Canvas.Top="185" Width="51" Source="/rent-icon.png"/>
+                <Image x:Name="buypbx4" Height="52" Canvas.Left="15" Canvas.Top="269" Width="51" Source="/rent-icon.png"/>
+                <Image x:Name="editRentpbx_Copy" Height="40" Canvas.Left="518" Canvas.Top="36" Width="39" Source="/edit-icon.png" MouseDown="editCellpbx_MouseDown" RenderTransformOrigin="0.265,0.5"/>
+                <Image x:Name="editRentpbx_Copy1" Height="40" Canvas.Left="518" Canvas.Top="114" Width="39" Source="/edit-icon.png" MouseDown="editCellpbx_MouseDown" RenderTransformOrigin="0.265,0.5"/>
+                <Image x:Name="editRentpbx_Copy2" Height="40" Canvas.Left="518" Canvas.Top="191" Width="39" Source="/edit-icon.png" MouseDown="editCellpbx_MouseDown" RenderTransformOrigin="0.265,0.5"/>
+                <Image x:Name="editRentpbx_Copy3" Height="40" Canvas.Left="518" Canvas.Top="275" Width="39" Source="/edit-icon.png" MouseDown="editCellpbx_MouseDown" RenderTransformOrigin="0.265,0.5"/>
+                <TextBox x:Name="purchasetxt" Canvas.Left="87" Canvas.Top="56" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden"/>
+                <TextBox x:Name="deposittxt" Canvas.Left="87" Canvas.Top="134" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden"/>
+                <TextBox x:Name="interesttxt" Canvas.Left="87" Canvas.Top="211" Text="0" TextWrapping="Wrap" Width="190" FontSize="16" Visibility="Hidden"/>
+                <Label x:Name="purchasePricelb" Content="Purchase price" Canvas.Left="84" Canvas.Top="30" FontSize="16"/>
+                <Label x:Name="depositlb" Content="Total deposit" Canvas.Left="84" Canvas.Top="108" FontSize="16"/>
+                <Label x:Name="interestRatelb" Content="Interest rate" Canvas.Left="84" Canvas.Top="177" FontSize="16"/>
+                <Label x:Name="monthsToPaylb" Content="Months to repay between 240 - 360" Canvas.Left="84" Canvas.Top="266" FontSize="16"/>
+                <Label x:Name="rentCostlb_Copy" Content="R0" Canvas.Left="87" Canvas.Top="56" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <Label x:Name="rentCostlb_Copy1" Content="R0" Canvas.Left="87" Canvas.Top="134" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <Label x:Name="rentCostlb_Copy2" Content="0%" Canvas.Left="87" Canvas.Top="203" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <Label x:Name="rentCostlb_Copy3" Content="240 months" Canvas.Left="91" Canvas.Top="292" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+            </Canvas>
+        </Canvas>
     </Grid>
 
 

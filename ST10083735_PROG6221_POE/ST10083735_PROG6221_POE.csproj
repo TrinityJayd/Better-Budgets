@@ -19,6 +19,7 @@
     <None Remove="next-icon.png" />
     <None Remove="notification-icon.png" />
     <None Remove="phone-icon.png" />
+    <None Remove="rent-icon.png" />
     <None Remove="search-icon.png" />
   </ItemGroup>
 
@@ -35,6 +36,7 @@
     <Resource Include="next-icon.png" />
     <Resource Include="notification-icon.png" />
     <Resource Include="phone-icon.png" />
+    <Resource Include="rent-icon.png" />
     <Resource Include="search-icon.png" />
   </ItemGroup>
 
