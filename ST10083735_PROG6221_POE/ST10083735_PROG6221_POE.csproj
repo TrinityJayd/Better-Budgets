@@ -22,6 +22,7 @@
     <None Remove="phone-icon.png" />
     <None Remove="rent-icon.png" />
     <None Remove="search-icon.png" />
+    <None Remove="VehicleImg.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +45,7 @@
     <Resource Include="phone-icon.png" />
     <Resource Include="rent-icon.png" />
     <Resource Include="search-icon.png" />
+    <Resource Include="VehicleImg.png" />
   </ItemGroup>
 
 </Project>

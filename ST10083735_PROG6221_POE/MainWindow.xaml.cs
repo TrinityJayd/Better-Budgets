@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ST10083735_PROG6221_POE
 {
@@ -30,7 +24,7 @@ namespace ST10083735_PROG6221_POE
         IncomeTax addIncome = new IncomeTax(0, 0);
         HomeLoan addBuyingExpense = new HomeLoan(0, 0, 0, 0, 0, 0, 0, 0, 0);
         Rent addRentExpense = new Rent(0, 0, 0, 0, 0, 0);
-        Vehicle addVehicle = new Vehicle("", 0, 0, 0, 0); 
+        Vehicle addVehicle = new Vehicle("", 0, 0, 0, 0);
 
         public MainWindow()
         {
@@ -184,7 +178,7 @@ namespace ST10083735_PROG6221_POE
 
                     //Move to vehicle panel 
                     accomodationpnl.Visibility = Visibility.Hidden;
-                    //vehiclepnl.Visible = true;
+                    vehiclepnl.Visibility = Visibility.Visible;
 
                 }
                 else
@@ -200,6 +194,373 @@ namespace ST10083735_PROG6221_POE
             }
 
 
+        }
+
+        private void completebtn_Click(object sender, RoutedEventArgs e)
+        {
+            modelErrorlb.Visibility = Visibility.Hidden;
+            vehicleFormatError.Visibility = Visibility.Hidden;
+            //If the user hasnt chosen yes or no an error will be displayed
+            if (yesrbtn.IsChecked == false && norbtn.IsChecked == false)
+            {
+                vehicleErrorlb.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                vehicleErrorlb.Visibility = Visibility.Hidden;
+
+                //If they have chosen yes then check if the values are in the correct format
+                if (yesrbtn.IsChecked == true)
+                {
+                    string modelAndMake = modeltxt.Text;
+                    bool vehiclePurchasePriceValid = newData.isDecimalValid(vehicleCosttxt.Text);
+                    bool vehicleDepositValid = newData.isDecimalValid(vehicleDeposittxt.Text);
+                    bool vehicleInterestValid = newData.isDecimalValid(vehicleInteresttxt.Text);
+                    bool vehicleInsuranceValid = newData.isDecimalValid(insurancetxt.Text);
+
+
+                    if (modelAndMake == null || modelAndMake == "")
+                    {
+                        modelErrorlb.Visibility = Visibility.Visible;
+                        return;
+                    }
+                    //if the values are not valid, the erro will be displayed
+                    else if (vehiclePurchasePriceValid == false || vehicleDepositValid == false || vehicleInterestValid == false || vehicleInsuranceValid == false)
+                    {
+                        vehicleFormatError.Visibility = Visibility.Visible;
+                        return;
+                    }
+                    else
+                    {
+                        modelErrorlb.Visibility = Visibility.Hidden;
+                        vehicleFormatError.Visibility = Visibility.Hidden;
+
+                        //if the values are valid then they are stored
+                        double vehiclePrice = Convert.ToDouble(vehicleCosttxt.Text);
+                        double vehicleDeposit = Convert.ToDouble(vehicleDeposittxt.Text);
+                        double vehicleInterest = Convert.ToDouble(vehicleInteresttxt.Text);
+                        double vehicleInsurance = Convert.ToDouble(insurancetxt.Text);
+
+                        //send values to the vehicle constructor
+                        addVehicle = new Vehicle(modelAndMake, vehiclePrice, vehicleDeposit, vehicleInterest, vehicleInsurance);
+
+                        //the complete analyis method will display the expenses and calculate how much the user has spent
+                        completeAnalysis();
+
+                        //display the home panel
+                        vehiclepnl.Visibility = Visibility.Hidden;
+                        homepnl.Visibility = Visibility.Visible;
+
+                        //make the button that allows the user to order the expenses visible
+                        Orderbtn.Visibility = Visibility.Visible;
+                    }
+                }
+                else
+                {
+
+                    completeAnalysis();
+
+                    //display the home panel
+                    vehiclepnl.Visibility = Visibility.Hidden;
+                    homepnl.Visibility = Visibility.Visible;
+
+                    Orderbtn.Visibility = Visibility.Visible;
+                }
+
+                //delegate for the exceeds 75% method
+                exceedsIncomeDel newDel = expensesExceed75Perc;
+
+                //if the delegate returns true, the total expenses
+                //exceed 75% of the total income
+                if (newDel() == true)
+                {
+                    //If there are no notifications,  the notification can be displayed on the first
+                    //notification label
+                    String notifText = notificationInfolb.Content.ToString();
+                    if (notifText.Contains("Nothing here yet."))
+                    {
+                        //add date and time to the notification
+                        DateTime now = DateTime.Now;
+                        notificationInfolb.Content = "Your total expenses exceed 75% of your income.\n" + now.ToString("F");
+
+                        //make the notification visible
+                        notifpbx2.Visibility = Visibility.Hidden;
+                        notiflb2.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        //If there is already a notification being displayed 
+                        //display the notification on the second label
+                        //make the notification visible
+                        notifpbx2.Visibility = Visibility.Visible;
+                        notiflb2.Visibility = Visibility.Visible;
+
+                        //Add date to the notification
+                        DateTime now = DateTime.Now;
+                        notiflb2.Content = "Your total expenses exceed 75% of your income.\n" + now.ToString("F");
+                    }
+
+                    //alert the user that they have a notification
+                    MessageBox.Show("You have a new notification", "Alert",MessageBoxButton.OK, MessageBoxImage.Information);
+
+                }
+
+
+            }
+
+        }
+
+        //Create delegate for the function that
+        //checks if the user's total expenses exceeds 75% of their income
+        public delegate bool exceedsIncomeDel();
+
+        //Calculate if total expenses exceed 75% of income
+        private bool expensesExceed75Perc()
+        {
+            //The program needs to check if the expenses exceed 75% of the total income
+            //Therefore the threshold is 75
+            const double THRESHOLD = 0.75;
+
+            //To calculate the total expenses call the sum expenses function which will
+            //Calculate and return the total expenses in the expense dictionary
+            double totalExpenses = sumExpenseList();
+
+            //Calculate 75% of the income the user has provided
+            double percOfIncome75 = addIncome.GrossIncome * THRESHOLD;
+
+            //If the expenses exceed 75% of the income return true
+            if (totalExpenses > percOfIncome75)
+            {
+                return true;
+            }
+            else
+            {
+                //else return false
+                return false;
+            }
+
+        }
+
+        private void completeAnalysis()
+        {
+            //populate the dictionary
+            fillDictionary();
+
+            //sort and display the dictionary in descending order
+            sortAndDisplayListDESC();
+
+            //store the money left in a variable
+            double moneyAfterExpenses = moneyLeft();
+
+            //Display how much money is left over for the user 
+            analysisCostsrtbx.Document.Blocks.Clear();
+
+            TextRange rangeOfText1 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
+            rangeOfText1.Text = "You have spent ";
+            rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
+
+
+
+
+
+
+            //Display a different message based on what the user has left over at the end of the month.
+            if (moneyAfterExpenses == 0)
+            {
+                rangeOfText1.Text = "You have no money left for the month";
+                return;
+            }
+            else if (moneyAfterExpenses > 0)
+            {
+                rangeOfText1.Text = "You have ";
+            }
+            else
+            {
+                rangeOfText1.Text = "You have a negative balance of ";
+            }
+
+            //Different colour and font for the amount
+            TextRange rangeOfWord = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
+            
+            rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, Color.FromRgb(96, 182, 79));
+            rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+
+            //if they have a positive balance display the amount
+            if (moneyAfterExpenses > 0)
+            {
+                rangeOfWord.Text = "R" + moneyAfterExpenses;
+            }
+            else
+            {
+                //if the value is negative find the absolute value
+                rangeOfWord.Text = "- R" + Math.Abs(moneyAfterExpenses);
+            }
+
+            //Chage the font colour
+            TextRange rangeOfText2 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
+         
+            rangeOfText2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
+
+            if (moneyAfterExpenses > 0)
+            {
+                rangeOfText2.Text = " left for the month.";
+            }
+
+            //store the total percentage the user spent in a variable
+            double percentageSpent = percentageOfIncome();
+            rangeOfText2.Text += "\n\nYou have spent ";
+
+            //Code to make the percentage amount a different color and font
+            TextRange textRange3 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
+
+            textRange3.ApplyPropertyValue(TextElement.ForegroundProperty, Color.FromRgb(96, 182, 79));
+            textRange3.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+
+            textRange3.Text = percentageSpent + "% ";
+
+            TextRange rangeOfText4 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
+
+            rangeOfText4.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
+            textRange3.Text = "of your income.";
+
+            //analysisCostsrtbx.AppendText(rangeOfText1);
+        }
+
+        //calculate in total how much of the income was spent on the expenses
+        private double percentageOfIncome()
+        {
+            double percentage;
+
+            //calculate the percentage of the users income that was spent on the expenses
+            percentage = sumExpenseList() / (addIncome.GrossIncome / 100);
+
+            //round of the value to 2 decimal places
+            percentage = Math.Round(percentage, 2);
+
+
+            return percentage;
+        }
+
+        private double sumExpenseList()
+        {
+            double totalExpenses = 0;
+            //calculate the total expenses
+            totalExpenses += expenses.Sum(x => x.Value);
+
+            return totalExpenses;
+        }
+
+
+
+        //Add expenses to the array
+        private void fillDictionary()
+        {
+            //Clear the dictionary to prevent the prgram from crashing when the same key is enetered
+            expenses.Clear();
+
+            // add expenses to the dictionary
+            expenses.Add("Tax", addIncome.Tax);
+            expenses.Add("Groceries", ReturnChosenObj().Groceries);
+            expenses.Add("Utilities", ReturnChosenObj().Utilities);
+            expenses.Add("Travel", ReturnChosenObj().Travel);
+            expenses.Add("Phone", ReturnChosenObj().Phone);
+            expenses.Add("Other", ReturnChosenObj().Other);
+
+
+            //if the user chose rent add rent to the dictionary
+            if (rentgrp.IsChecked == true)
+            {
+                expenses.Add("Monthly Rent", addRentExpense.MonthlyRent);
+
+            }
+            else
+            {
+                //if the user chose buy add home loan to the dictionary
+                expenses.Add("Home Deposit", addBuyingExpense.TotalDeposit);
+                double homeRepayment = addBuyingExpense.calcMonthlyRepayment();
+                expenses.Add("Monthly Home Repayment", homeRepayment);
+
+            }
+
+            if (yesrbtn.IsChecked == true)
+            {
+                //if the user decided that they are buying a vehicle, add it to the dictionary
+                double monthlyRepayment = addVehicle.totalCost();
+                expenses.Add("Vehicle Deposit", addVehicle.Deposit);
+                expenses.Add("Vehicle Repayment(incl. Insurance)", monthlyRepayment);
+
+            }
+
+
+        }
+
+        //sort the dictionary in descending order
+        private void sortAndDisplayListDESC()
+        {
+
+            summaryInfolb.Content = "";
+            amountslb.Content = "";
+
+            //Income will always be displayed at the top of the list
+            summaryInfolb.Content = "Gross Income\n";
+            amountslb.Content = "R" + addIncome.GrossIncome + "\n";
+            foreach (KeyValuePair<string, double> number in expenses.OrderByDescending(key => key.Value))
+            {
+                summaryInfolb.Content += number.Key + "\n";
+                amountslb.Content += "R" + number.Value + "\n";
+            }
+
+
+
+        }
+
+        //sort the dictionary in ascending order
+        private void sortListLowToHigh()
+        {
+            summaryInfolb.Content = "";
+            amountslb.Content = "";
+
+            //Income will always be displayed at the top of the list
+            summaryInfolb.Content = "Gross Income\n";
+            amountslb.Content = "R" + addIncome.GrossIncome + "\n";
+            foreach (KeyValuePair<string, double> number in expenses.OrderBy(key => key.Value))
+            {
+                summaryInfolb.Content += number.Key + "\n";
+                amountslb.Content += "R" + number.Value + "\n";
+            }
+
+
+        }
+
+        private void Orderbtn_Click(object sender, RoutedEventArgs e)
+        {
+            //if the button caption is low to high and the user clicks it, display the dictionary in ascending order
+            if (Orderbtn.Content.Equals("Low to High"))
+            {
+                sortListLowToHigh();
+                //change the caption to high to low since it is already sorted in ascending order
+                Orderbtn.Content = "High to Low";
+            }
+            else
+            {
+                //if the button caption is high to low and the user clicks it, display the dictionary in descending order
+                sortAndDisplayListDESC();
+                //change the caption to low to high since it is already sorted in descending order
+                Orderbtn.Content = "Low to High";
+            }
+        }
+
+        //Calculate how much money is left over for the user
+        private double moneyLeft()
+        {
+            //store the total expenses in a variable
+            double totalExpenses = sumExpenseList();
+            double moneyLeftOver = 0;
+
+            //calculate the money left over
+            moneyLeftOver = addIncome.GrossIncome - totalExpenses;
+            double roudedMoneyLeftOver = Math.Round(moneyLeftOver, 2);
+            return roudedMoneyLeftOver;
         }
 
         private void startbtn_Click(object sender, RoutedEventArgs e)
@@ -260,11 +621,11 @@ namespace ST10083735_PROG6221_POE
         }
 
         private void exitSearchpbx_MouseDown(object sender, MouseButtonEventArgs e)
-        {          
+        {
             resultNamelb.Visibility = Visibility.Hidden;
             resultCostlb.Visibility = Visibility.Hidden;
             searchResultspbx.Visibility = Visibility.Hidden;
-            searchpnl.Visibility = Visibility.Hidden ;
+            searchpnl.Visibility = Visibility.Hidden;
             homepnl.Visibility = Visibility.Visible;
             searchtxt.Text = "";
             aboutrtb.Visibility = Visibility.Hidden;
@@ -369,24 +730,24 @@ namespace ST10083735_PROG6221_POE
                         showSearchResults();
                         expensePercentageOfIncome(addBuyingExpense.calcMonthlyRepayment());
                         break;
-                    //case string search1 when (search1.Contains("car deposit") || search1.Contains("vehicle deposit")) && yesrbtn.Checked == true:
-                    //    resultNamelb.Content = "Vehicle Deposit";
-                    //    resultCostlb.Content = "R" + addVehicle.Deposit.ToString();
-                    //    showSearchResults();
-                    //    expensePercentageOfIncome(addVehicle.Deposit);
-                    //    break;
-                    //case string search1 when (search1.Contains("car payment") || search1.Contains("vehicle pay") || search1.Contains("car repay") || search1.Contains("vehicle repayment")) && yesrbtn.Checked == true:
-                    //    resultNamelb.Content = "Vehicle Repayment";
-                    //    resultCostlb.Content = "R" + addVehicle.totalMonthlyCost();
-                    //    showSearchResults();
-                    //    expensePercentageOfIncome(addVehicle.totalMonthlyCost());
-                    //    break;
-                    //case string search1 when (search1.Contains("insurance")) && yesrbtn.Checked == true:
-                    //    resultNamelb.Content = "Vehicle Insurance";
-                    //    resultCostlb.Content = "R" + addVehicle.EstInsurancePremium.ToString();
-                    //    showSearchResults();
-                    //    expensePercentageOfIncome(addVehicle.EstInsurancePremium);
-                    //    break;
+                    case string search1 when (search1.Contains("car deposit") || search1.Contains("vehicle deposit")) && yesrbtn.IsChecked == true:
+                        resultNamelb.Content = "Vehicle Deposit";
+                        resultCostlb.Content = "R" + addVehicle.Deposit.ToString();
+                        showSearchResults();
+                        expensePercentageOfIncome(addVehicle.Deposit);
+                        break;
+                    case string search1 when (search1.Contains("car payment") || search1.Contains("vehicle pay") || search1.Contains("car repay") || search1.Contains("vehicle repayment")) && yesrbtn.IsChecked == true:
+                        resultNamelb.Content = "Vehicle Repayment";
+                        resultCostlb.Content = "R" + addVehicle.totalMonthlyCost();
+                        showSearchResults();
+                        expensePercentageOfIncome(addVehicle.totalMonthlyCost());
+                        break;
+                    case string search1 when (search1.Contains("insurance")) && yesrbtn.IsChecked == true:
+                        resultNamelb.Content = "Vehicle Insurance";
+                        resultCostlb.Content = "R" + addVehicle.EstInsurancePremium.ToString();
+                        showSearchResults();
+                        expensePercentageOfIncome(addVehicle.EstInsurancePremium);
+                        break;
                     default:
                         //if the search does not match anything show that there are no results
                         noResultslb.Visibility = Visibility.Visible;
@@ -434,8 +795,8 @@ namespace ST10083735_PROG6221_POE
 
             TextRange rangeOfText1 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
             rangeOfText1.Text = "You have spent ";
-            rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty,Brushes.Black );
-           
+            rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
+
 
             TextRange rangeOfWord = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
             rangeOfWord.Text = percentage + "% ";
@@ -445,9 +806,9 @@ namespace ST10083735_PROG6221_POE
             TextRange rangeOfText2 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
             rangeOfText2.Text = "of your income on this expense.";
             rangeOfText2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
-           
+
         }
-    
+
 
         //If the user hits the enter key the amount is displayed on the corresponding label
         private void enterAmount(KeyEventArgs e, Label costLabel, TextBox input)
@@ -655,7 +1016,7 @@ namespace ST10083735_PROG6221_POE
         private void previouspbx_MouseDown(object sender, MouseButtonEventArgs e)
         {
             accomodationpnl.Visibility = Visibility.Hidden;
-            expensepnl.Visibility = Visibility.Visible ;
+            expensepnl.Visibility = Visibility.Visible;
         }
 
         private void editRentpbx_MouseDown(object sender, MouseButtonEventArgs e)
@@ -684,16 +1045,91 @@ namespace ST10083735_PROG6221_POE
             aboutrtb.Visibility = Visibility.Visible;
         }
 
+
+
+
+
         private void yesrbtn_Checked(object sender, RoutedEventArgs e)
         {
-            if (yesrbtn.IsChecked == true)
+
+            vehiclePurchasepnl.Visibility = Visibility.Visible;
+
+
+        }
+
+        private void norbtn_Checked(object sender, RoutedEventArgs e)
+        {
+            vehiclePurchasepnl.Visibility = Visibility.Hidden;
+        }
+
+        private void editModelpbx_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (modeltxt.Visibility == Visibility.Hidden)
             {
-                vehiclePurchasepnl.Visibility = Visibility.Visible;
+                modelSavelb.Visibility = Visibility.Hidden;
+                modeltxt.Visibility = Visibility.Visible;
+
             }
-            else
+            else if (modeltxt.Visibility == Visibility.Visible)
             {
-                vehiclePurchasepnl.Visibility = Visibility.Hidden;
+                modeltxt.Visibility = Visibility.Hidden;
+                modelSavelb.Visibility = Visibility.Visible;
+            }
+            modelSavelb.Content = modeltxt.Text;
+        }
+
+        private void editVehicleCostpbx_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            editFigure(vehicleCostlb, vehicleCosttxt);
+        }
+
+        private void editVehicleDepositpbx_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            editFigure(vehicleDepositCostlb, vehicleDeposittxt);
+        }
+
+        private void editVehicleInterestpbx_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            editFigure(vehicleInterestPerclb, vehicleInteresttxt);
+            vehicleInterestPerclb.Content = vehicleInteresttxt.Text + "%";
+        }
+
+        private void editinsurancelb_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            editFigure(insuranceCostlb, insurancetxt);
+        }
+
+        private void modeltxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                modeltxt.Visibility = Visibility.Hidden;
+                modelSavelb.Visibility = Visibility.Visible;
+                modelSavelb.Content = modeltxt.Text;
             }
         }
+
+        private void vehicleCosttxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            enterAmount(e, vehicleCostlb, vehicleCosttxt);
+        }
+
+        private void vehicleDeposittxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            enterAmount(e, vehicleDepositCostlb, vehicleDeposittxt);
+        }
+
+        private void vehicleInteresttxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            enterAmount(e, vehicleInterestPerclb, vehicleInteresttxt);
+            vehicleInterestPerclb.Content = vehicleInteresttxt.Text + "%";
+        }
+
+        private void insurancetxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            enterAmount(e, insuranceCostlb, insurancetxt);
+        }
+
+        
     }
 }
