@@ -301,12 +301,14 @@ namespace ST10083735_PROG6221_POE
                     }
 
                     //alert the user that they have a notification
-                    MessageBox.Show("You have a new notification", "Alert",MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("You have a new notification", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 }
 
 
             }
+
+            
 
         }
 
@@ -354,20 +356,13 @@ namespace ST10083735_PROG6221_POE
 
             //Display how much money is left over for the user 
             analysisCostsrtbx.Document.Blocks.Clear();
-
-            TextRange rangeOfText1 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
-            rangeOfText1.Text = "You have spent ";
-            rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
-
-
-
-
+            TextRange rangeOfText1 = new TextRange(analysisCostsrtbx.Document.ContentEnd, analysisCostsrtbx.Document.ContentEnd);
 
 
             //Display a different message based on what the user has left over at the end of the month.
             if (moneyAfterExpenses == 0)
             {
-                rangeOfText1.Text = "You have no money left for the month";
+                rangeOfText1.Text = "You have no money left for the month.";
                 return;
             }
             else if (moneyAfterExpenses > 0)
@@ -378,12 +373,13 @@ namespace ST10083735_PROG6221_POE
             {
                 rangeOfText1.Text = "You have a negative balance of ";
             }
+            rangeOfText1.ApplyPropertyValue(TextElement.FontFamilyProperty, "Verdana");
+            rangeOfText1.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
 
             //Different colour and font for the amount
-            TextRange rangeOfWord = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
-            
-            rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, Color.FromRgb(96, 182, 79));
-            rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+            SolidColorBrush mySolidColorBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#60b64f");
+
+            TextRange rangeOfWord = new TextRange(analysisCostsrtbx.Document.ContentEnd, analysisCostsrtbx.Document.ContentEnd);
 
             //if they have a positive balance display the amount
             if (moneyAfterExpenses > 0)
@@ -395,11 +391,13 @@ namespace ST10083735_PROG6221_POE
                 //if the value is negative find the absolute value
                 rangeOfWord.Text = "- R" + Math.Abs(moneyAfterExpenses);
             }
+            rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, mySolidColorBrush);
+            rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.ExtraBold);
+            rangeOfWord.ApplyPropertyValue(TextElement.FontFamilyProperty, "Verdana");
 
             //Chage the font colour
-            TextRange rangeOfText2 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
-         
-            rangeOfText2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
+            TextRange rangeOfText2 = new TextRange(analysisCostsrtbx.Document.ContentEnd, analysisCostsrtbx.Document.ContentEnd);
+
 
             if (moneyAfterExpenses > 0)
             {
@@ -408,22 +406,22 @@ namespace ST10083735_PROG6221_POE
 
             //store the total percentage the user spent in a variable
             double percentageSpent = percentageOfIncome();
-            rangeOfText2.Text += "\n\nYou have spent ";
+            rangeOfText2.Text += "\nYou have spent ";
+            rangeOfText2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
+            rangeOfText2.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
 
             //Code to make the percentage amount a different color and font
-            TextRange textRange3 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
-
-            textRange3.ApplyPropertyValue(TextElement.ForegroundProperty, Color.FromRgb(96, 182, 79));
-            textRange3.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
-
+            TextRange textRange3 = new TextRange(analysisCostsrtbx.Document.ContentEnd, analysisCostsrtbx.Document.ContentEnd);
             textRange3.Text = percentageSpent + "% ";
+            textRange3.ApplyPropertyValue(TextElement.ForegroundProperty, mySolidColorBrush);
+            textRange3.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.ExtraBold);
 
-            TextRange rangeOfText4 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
-
+            TextRange rangeOfText4 = new TextRange(analysisCostsrtbx.Document.ContentEnd, analysisCostsrtbx.Document.ContentEnd);
+            rangeOfText4.Text = "of your income.";
             rangeOfText4.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
-            textRange3.Text = "of your income.";
+            rangeOfText4.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
 
-            //analysisCostsrtbx.AppendText(rangeOfText1);
+
         }
 
         //calculate in total how much of the income was spent on the expenses
@@ -784,28 +782,23 @@ namespace ST10083735_PROG6221_POE
                 percentage = 0;
             }
             aboutrtb.Document.Blocks.Clear();
-            //aboutrtb.AppendText("You have spent ");
-            ////display the percentage in a different color and font
-            //aboutrtb.Selection = Color.FromRgb(96, 182, 79);
-            //aboutrtb.SelectionFont = new Font("Verdana", 12, FontStyle.Bold);
-            //aboutrtb.AppendText(percentage + "% ");
-            //aboutrtb.SelectionColor = Color.Black;
-            //aboutrtb.SelectionFont = new Font("Calibri Light", 13);
-            //aboutrtb.AppendText("of your income on this expense.");
+
 
             TextRange rangeOfText1 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
             rangeOfText1.Text = "You have spent ";
             rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
 
+            SolidColorBrush mySolidColorBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#60b64f");
 
             TextRange rangeOfWord = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
             rangeOfWord.Text = percentage + "% ";
-            rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, Color.FromRgb(96, 182, 79));
+            rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, mySolidColorBrush);
             rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
 
             TextRange rangeOfText2 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
             rangeOfText2.Text = "of your income on this expense.";
             rangeOfText2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
+            rangeOfText2.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
 
         }
 
@@ -1130,6 +1123,6 @@ namespace ST10083735_PROG6221_POE
             enterAmount(e, insuranceCostlb, insurancetxt);
         }
 
-        
+
     }
 }
