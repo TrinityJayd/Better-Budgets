@@ -196,7 +196,7 @@ namespace ST10083735_PROG6221_POE
 
         }
 
-        private void completebtn_Click(object sender, RoutedEventArgs e)
+        private void nextpbx3_MouseDown(object sender, MouseButtonEventArgs e)
         {
             modelErrorlb.Visibility = Visibility.Hidden;
             vehicleFormatError.Visibility = Visibility.Hidden;
@@ -247,9 +247,9 @@ namespace ST10083735_PROG6221_POE
                         //the complete analyis method will display the expenses and calculate how much the user has spent
                         completeAnalysis();
 
-                        //display the home panel
+                        //display the savings panel
                         vehiclepnl.Visibility = Visibility.Hidden;
-                        homepnl.Visibility = Visibility.Visible;
+                        savingspnl.Visibility = Visibility.Visible;
 
                         //make the button that allows the user to order the expenses visible
                         Orderbtn.Visibility = Visibility.Visible;
@@ -307,6 +307,11 @@ namespace ST10083735_PROG6221_POE
 
 
             }
+        }
+
+        private void completebtn_Click(object sender, RoutedEventArgs e)
+        {
+            
 
             
 
@@ -1123,6 +1128,80 @@ namespace ST10083735_PROG6221_POE
             enterAmount(e, insuranceCostlb, insurancetxt);
         }
 
+        private void reasontxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            enterAmount(e, reasonSavelb, reasontxt);
+        }
 
+        private void amounttxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            enterAmount(e, amountSacelb, amounttxt);
+            if (reasontxt.Text.Equals(""))
+            {
+                reasontxt.Text = "";
+            }
+        }
+
+        private void yearsSpn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (yearsSpn.Visibility == Visibility.Visible)
+            {
+                yearsSpn.Visibility = Visibility.Hidden;
+                yearsSavelb.Content = yearsSpn.Value + " years";
+                yearsSavelb.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                yearsSavelb.Visibility = Visibility.Hidden;
+                yearsSpn.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void interestSavetxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            enterAmount(e, interestSavingslb, interestSavetxt);
+            interestSavingslb.Content = interestSavetxt.Text + "%";
+        }
+
+        private void editReasonpbx_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            editFigure(reasonSavelb, reasontxt);
+            if (reasontxt.Text.Equals(""))
+            {
+                reasontxt.Text = "";
+            }
+        }
+
+        private void edittAmountpbx_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            editFigure(amountSacelb, amounttxt);
+        }
+
+        private void editYearspbx_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (yearsSpn.Visibility == Visibility.Visible)
+            {
+                yearsSpn.Visibility = Visibility.Hidden;
+                yearsSavelb.Content = yearsSpn.Value + " years";
+                yearsSavelb.Visibility = Visibility.Visible;
+            }
+            else if(yearsSpn.Visibility == Visibility.Hidden)
+            {
+                yearsSavelb.Visibility = Visibility.Hidden;
+                yearsSpn.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void editInterestRatepbx_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            editFigure(interestSavingslb, interestSavetxt);
+            interestSavingslb.Content = interestSavetxt.Text + "%";
+        }
+
+        private void previouspbx4_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            savingspnl.Visibility = Visibility.Hidden;
+            vehiclepnl.Visibility = Visibility.Visible;
+        }
     }
 }

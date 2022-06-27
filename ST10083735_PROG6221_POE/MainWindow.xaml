@@ -18,7 +18,7 @@
             <Label x:Name="headinglb" Content="Better Budgets" Height="55" Canvas.Left="145" Canvas.Top="466" Width="289" FontFamily="Verdana" FontSize="36" />
             <TextBlock x:Name="subheadinglb" Height="51" Canvas.Left="138" Canvas.Top="543" Text="Save more money by spending more consciously today." TextWrapping="Wrap" Width="303" TextAlignment="Center" LineStackingStrategy="BlockLineHeight" LineHeight="23" FontSize="20" FontFamily="Calibri Light"/>
 
-            <!--End-->
+
             <!--Code Attribution
             Author: Microsoft DN
             Link: https://stackoverflow.com/questions/20073294/change-color-of-button-when-mouse-is-over
@@ -48,7 +48,7 @@
 
                 </Button.Resources>
             </Button>
-
+            <!--End-->
         </Canvas>
         <Canvas x:Name="homepnl" HorizontalAlignment="Left" Height="745" VerticalAlignment="Top" Width="634" Visibility="Hidden" Grid.ColumnSpan="3">
             <Label x:Name="homelb" Content="Home" Height="40" Canvas.Left="24" Canvas.Top="10" Width="111" FontSize="30" FontWeight="Normal"/>
@@ -116,8 +116,8 @@
                 </FlowDocument>
             </RichTextBox>
             <Image x:Name="exitimg" Height="49" Canvas.Left="542" Canvas.Top="675" Width="49" Source="/exit-icon.png" MouseDown="exitimg_MouseDown" RenderTransformOrigin="0.62,0.789"/>
-            <Image Height="49" Canvas.Left="24" Canvas.Top="677" Width="49" Source="/home-icon.png" RenderTransformOrigin="0.492,0.482"/>
-            <Image x:Name="expenseFormpb" Height="49" Canvas.Left="292" Canvas.Top="676" Width="50" Source="/coin-icon.png" RenderTransformOrigin="0.384,-0.034" MouseDown="expenseFormpb_MouseDown"/>
+            <Image x:Name="homepbx" Height="49" Canvas.Left="24" Canvas.Top="677" Width="49" Source="/home-icon.png" RenderTransformOrigin="0.492,0.482"/>
+            <Image x:Name="expenseFormpb" Height="49" Canvas.Left="292" Canvas.Top="676" Width="50" Source="/expenses.png" RenderTransformOrigin="0.384,-0.034" MouseDown="expenseFormpb_MouseDown"/>
         </Canvas>
         <Canvas x:Name="notificationpnl" HorizontalAlignment="Left" Height="745" VerticalAlignment="Top" Width="622" Visibility="Hidden" Grid.ColumnSpan="3">
             <Label x:Name="notificationlb" Content="Notifications" Height="40" Canvas.Left="24" Canvas.Top="10" Width="200" FontSize="30" FontWeight="Normal"/>
@@ -257,7 +257,37 @@
             <Label x:Name="vehicleFormatError" Content="There are errors with you amounts please try again.&#xA;&#x9;All decimals must use a period (.)&#xA;&#x9;   and no spaces are allowed." Canvas.Left="95" Canvas.Top="556" Height="76" FontSize="16" Visibility="Hidden" />
             <Image x:Name="previouspbx1" Height="52" Canvas.Left="25" Canvas.Top="650" Width="51" Source="/back-icon.png" MouseDown="previouspbx_MouseDown"/>
             <Label x:Name="choicelb" Content="Are you purchasing a vehicle?" Canvas.Left="25" Canvas.Top="85" FontSize="16"/>
-            <Button x:Name="completebtn" Content="Complete" Height="50" Canvas.Left="204" Canvas.Top="652" Width="208" Foreground="White" FontSize="18" Click="completebtn_Click">
+            <Label x:Name="modelErrorlb" Content="Please enter the vehicle model/make." Canvas.Left="158" Canvas.Top="573" FontSize="16" Visibility="Hidden"/>
+            <Image x:Name="nextpbx3" Height="52" Canvas.Left="546" Canvas.Top="652" Width="51" Source="/next-icon.png" MouseDown="nextpbx3_MouseDown"/>
+        </Canvas>
+        <Canvas x:Name="savingspnl" Grid.ColumnSpan="3" Margin="29,18,-622,32" Visibility="Hidden">
+            <Label x:Name="savingslb" Content="Savings" Canvas.Left="10" Canvas.Top="10" FontSize="30" FontWeight="Normal"/>
+            <Label x:Name="savingsChoicelb" Content="Do you have a savings account?" Canvas.Left="22" Canvas.Top="86" FontSize="16"/>
+            <RadioButton x:Name="yesSavebtn" Content="Yes" Canvas.Left="317" Canvas.Top="92" FontSize="16"/>
+            <RadioButton x:Name="noSavebtn" Content="No" Canvas.Left="412" Canvas.Top="92" FontSize="16"/>
+            <Canvas x:Name="savingsInputpnl" Height="348" Canvas.Left="23" Canvas.Top="152" Width="542">
+                <Image x:Name="savingspbx1" Height="52" Canvas.Left="15" Canvas.Top="30" Width="51" Source="/savings.png"/>
+                <Image x:Name="savingspbx2" Height="52" Canvas.Left="15" Canvas.Top="103" Width="51" Source="/savings.png"/>
+                <Image x:Name="savingspbx3" Height="52" Canvas.Left="15" Canvas.Top="190" Width="51" Source="/savings.png"/>
+                <Image x:Name="savingspbx4" Height="52" Canvas.Left="15" Canvas.Top="277" Width="51" Source="/savings.png"/>
+                <Image x:Name="editReasonpbx" Height="40" Canvas.Left="493" Canvas.Top="36" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="editReasonpbx_MouseDown"/>
+                <Image x:Name="edittAmountpbx" Height="40" Canvas.Left="493" Canvas.Top="109" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="edittAmountpbx_MouseDown"/>
+                <Image x:Name="editYearspbx" Height="40" Canvas.Left="493" Canvas.Top="196" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="editYearspbx_MouseDown"/>
+                <Image x:Name="editInterestRatepbx" Height="40" Canvas.Left="493" Canvas.Top="283" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="editInterestRatepbx_MouseDown"/>
+                <Label x:Name="reasonlb" Content="Why do you want to save?" Canvas.Left="84" Canvas.Top="30" FontSize="16"/>
+                <Label x:Name="amountlb" Content="How much do you want to save?" Canvas.Left="84" Canvas.Top="106" FontSize="16"/>
+                <Label x:Name="timelb" Content="For how long do you want to save? (Years)" Canvas.Left="84" Canvas.Top="193" FontSize="16"/>
+                <Label x:Name="interestRateSavingslb" Content="Interest Rate" Canvas.Left="84" Canvas.Top="280" FontSize="16"/>
+                <TextBox x:Name="reasontxt" TextWrapping="Wrap" FontSize="16" Visibility="Hidden" KeyDown="reasontxt_KeyDown" Height="21" Canvas.Left="95" Canvas.Top="60" Width="190"/>
+                <TextBox x:Name="amounttxt" TextWrapping="Wrap" FontSize="16" Visibility="Hidden" KeyDown="amounttxt_KeyDown" Height="21" Canvas.Left="95" Canvas.Top="135" Width="190"/>
+                <TextBox x:Name="interestSavetxt" TextWrapping="Wrap" FontSize="16" Visibility="Hidden" KeyDown="interestSavetxt_KeyDown" Height="21" Canvas.Left="95" Canvas.Top="305" Width="190"/>
+                <syncfusion:UpDown x:Name="yearsSpn" Height="23" Canvas.Left="95" NullValueText="1" Canvas.Top="227" Value="240" Width="73" FontSize="16" NumberDecimalDigits="1" NullValue="0" MinValue="1" MaxValue="50" Visibility="Hidden" KeyDown="yearsSpn_KeyDown"/>
+                <Label x:Name="reasonSavelb" Content="Enter a reason" Canvas.Left="87" Canvas.Top="56" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <Label x:Name="amountSacelb" Content="R0" Canvas.Left="87" Canvas.Top="135" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <Label x:Name="yearsSavelb" Content="0 years" Canvas.Left="87" Canvas.Top="222" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+                <Label x:Name="interestSavingslb" Content="0%" Canvas.Left="87" Canvas.Top="305" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
+            </Canvas>
+            <Button x:Name="completebtn" Content="Complete" Height="50" Canvas.Left="190" Canvas.Top="650" Width="208" Foreground="White" FontSize="18" Click="completebtn_Click">
                 <Button.Resources>
                     <Style TargetType="{x:Type Button}" >
                         <Setter Property="Background" Value="#FF60B64F"/>
@@ -281,7 +311,7 @@
 
                 </Button.Resources>
             </Button>
-            <Label x:Name="modelErrorlb" Content="Please enter the vehicle model/make." Canvas.Left="158" Canvas.Top="573" FontSize="16" Visibility="Hidden"/>
+            <Image x:Name="previouspbx4" Height="52" Canvas.Left="25" Canvas.Top="650" Width="51" Source="/back-icon.png" MouseDown="previouspbx4_MouseDown"/>
         </Canvas>
     </Grid>
 

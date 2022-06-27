@@ -13,6 +13,7 @@
     <None Remove="Currency_Flatline.png" />
     <None Remove="edit-icon.png" />
     <None Remove="exit-icon.png" />
+    <None Remove="expenses.png" />
     <None Remove="fuel-icon.png" />
     <None Remove="groceries-icon.png" />
     <None Remove="home-icon.png" />
@@ -20,7 +21,9 @@
     <None Remove="next-icon.png" />
     <None Remove="notification-icon.png" />
     <None Remove="phone-icon.png" />
+    <None Remove="rand.png" />
     <None Remove="rent-icon.png" />
+    <None Remove="savings.png" />
     <None Remove="search-icon.png" />
     <None Remove="VehicleImg.png" />
   </ItemGroup>
@@ -37,6 +40,7 @@
     <Resource Include="Currency_Flatline.png" />
     <Resource Include="edit-icon.png" />
     <Resource Include="exit-icon.png" />
+    <Resource Include="expenses.png" />
     <Resource Include="fuel-icon.png" />
     <Resource Include="groceries-icon.png" />
     <Resource Include="home-icon.png" />
@@ -44,7 +48,9 @@
     <Resource Include="next-icon.png" />
     <Resource Include="notification-icon.png" />
     <Resource Include="phone-icon.png" />
+    <Resource Include="rand.png" />
     <Resource Include="rent-icon.png" />
+    <Resource Include="savings.png" />
     <Resource Include="search-icon.png" />
     <Resource Include="VehicleImg.png" />
   </ItemGroup>
