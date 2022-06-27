@@ -3,22 +3,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ST10083735_PROG6221_POE"
-        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" xmlns:ig="http://schemas.infragistics.com/xaml" x:Name="main" x:Class="ST10083735_PROG6221_POE.MainWindow"
+        xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf" xmlns:local="clr-namespace:ST10083735_PROG6221_POE" xmlns:SunburstChart="clr-namespace:Syncfusion.UI.Xaml.SunburstChart;assembly=Syncfusion.SfSunburstChart.WPF" d:DataContext="{d:DesignInstance Type={x:Type local:MainViewModel}}"  x:Name="main" x:Class="ST10083735_PROG6221_POE.MainWindow"
         mc:Ignorable="d"
-        Title="Better Budgets" Height="791" Width="649" FontFamily="Verdana" FontSize="14" ResizeMode="NoResize" Icon="/coin-icon.png" WindowStartupLocation="CenterScreen">
+        Title="Better Budgets" Height="791" Width="649" FontFamily="Verdana" FontSize="14" ResizeMode="NoResize" Icon="/coin-icon.png" WindowStartupLocation="CenterScreen" >
+
     <Grid x:Name="mainFrm" Margin="0,0,770,5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="11*"/>
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="225*"/>
         </Grid.ColumnDefinitions>
+
         <Canvas x:Name="mainpnl" Margin="24,18,903,32" Grid.ColumnSpan="3" Visibility="Hidden">
             <Image x:Name="mainImg" Height="506" Canvas.Top="12" Width="509" Source="/Currency_Flatline.png" Stretch="UniformToFill" Canvas.Left="35"/>
             <Label x:Name="headinglb" Content="Better Budgets" Height="55" Canvas.Left="145" Canvas.Top="466" Width="289" FontFamily="Verdana" FontSize="36" />
             <TextBlock x:Name="subheadinglb" Height="51" Canvas.Left="138" Canvas.Top="543" Text="Save more money by spending more consciously today." TextWrapping="Wrap" Width="303" TextAlignment="Center" LineStackingStrategy="BlockLineHeight" LineHeight="23" FontSize="20" FontFamily="Calibri Light"/>
 
 
+            <!--End-->
             <!--Code Attribution
             Author: Microsoft DN
             Link: https://stackoverflow.com/questions/20073294/change-color-of-button-when-mouse-is-over
@@ -48,7 +51,6 @@
 
                 </Button.Resources>
             </Button>
-            <!--End-->
         </Canvas>
         <Canvas x:Name="homepnl" HorizontalAlignment="Left" Height="745" VerticalAlignment="Top" Width="634" Visibility="Hidden" Grid.ColumnSpan="3">
             <Label x:Name="homelb" Content="Home" Height="40" Canvas.Left="24" Canvas.Top="10" Width="111" FontSize="30" FontWeight="Normal"/>
@@ -81,9 +83,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border Background="{TemplateBinding Background}" CornerRadius="25">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="25"/>
 
                                 </ControlTemplate>
                             </Setter.Value>
@@ -100,7 +100,7 @@
             </Button>
             <Label x:Name="summaryInfolb" Content="Income:&#xA;Tax:&#xA;Groceries:&#xA;Water and lights:&#xA;Travel:&#xA;Cellphone/telephone:&#xA;Other:" Height="302" Canvas.Left="24" Canvas.Top="247" Width="313" FontSize="22" FontFamily="Calibri Light" />
             <Label x:Name="amountslb" Content="R0&#xA;R0&#xA;R0&#xA;R0&#xA;R0&#xA;R0&#xA;R0" Height="302" Canvas.Left="337" Canvas.Top="247" Width="266" FontSize="22" FontFamily="Calibri" FontWeight="Bold" Foreground="#FF60B64F" />
-            <RichTextBox x:Name="analysisCostsrtbx" Height="101" Canvas.Left="24" Canvas.Top="574" Width="496" BorderBrush="White" IsReadOnly="True" BorderThickness="0" FontFamily="Calibri Light" FontSize="18" RenderTransformOrigin="0.5,0.5">
+            <RichTextBox x:Name="analysisCostsrtbx" Height="101" Canvas.Left="24" Canvas.Top="574" Width="377" BorderBrush="White" IsReadOnly="True" BorderThickness="0" FontFamily="Calibri Light" FontSize="18" RenderTransformOrigin="0.5,0.5">
                 <RichTextBox.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -118,6 +118,30 @@
             <Image x:Name="exitimg" Height="49" Canvas.Left="542" Canvas.Top="675" Width="49" Source="/exit-icon.png" MouseDown="exitimg_MouseDown" RenderTransformOrigin="0.62,0.789"/>
             <Image x:Name="homepbx" Height="49" Canvas.Left="24" Canvas.Top="677" Width="49" Source="/home-icon.png" RenderTransformOrigin="0.492,0.482"/>
             <Image x:Name="expenseFormpb" Height="49" Canvas.Left="292" Canvas.Top="676" Width="50" Source="/expenses.png" RenderTransformOrigin="0.384,-0.034" MouseDown="expenseFormpb_MouseDown"/>
+            <Button x:Name="viewGraphbtn" Content="View Graph" Canvas.Left="470" Canvas.Top="605" Width="133" Height="34" Foreground="White" FontSize="16" Visibility="Hidden" Click="viewGraphbtn_Click">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Button}" >
+                        <Setter Property="Background" Value="#FF60B64F"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="25">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#4c913f"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+                </Button.Resources>
+            </Button>
         </Canvas>
         <Canvas x:Name="notificationpnl" HorizontalAlignment="Left" Height="745" VerticalAlignment="Top" Width="622" Visibility="Hidden" Grid.ColumnSpan="3">
             <Label x:Name="notificationlb" Content="Notifications" Height="40" Canvas.Left="24" Canvas.Top="10" Width="200" FontSize="30" FontWeight="Normal"/>
@@ -317,6 +341,11 @@
             <Label x:Name="reasonErrorlb" Content="Please enter the reason you want to save." Canvas.Left="119" Canvas.Top="569" FontSize="16" Visibility="Hidden"/>
         </Canvas>
 
+        <Canvas x:Name="analysispnl" Grid.ColumnSpan="3"  HorizontalAlignment="Left" Height="720" Margin="29,18,0,0" VerticalAlignment="Top" Width="581" IsVisibleChanged="Canvas_IsVisibleChanged" Visibility="Visible" >
+            <Image x:Name="exitgraphpbx" Height="57" Width="53" Source="/exit-icon.png" Canvas.Left="496" Canvas.Top="659" MouseDown="exitgraphpbx_MouseDown"/>
+            <Label x:Name="expenseAnalysislb"  Foreground="#FF60B64F" Content="Expense Analysis" Canvas.Left="169" Canvas.Top="10" FontSize="24" FontWeight="Bold"/>
+
+        </Canvas>
 
     </Grid>
 

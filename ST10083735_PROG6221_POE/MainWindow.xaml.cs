@@ -1,4 +1,5 @@
-﻿using Infragistics.Controls.Charts;
+﻿
+using Syncfusion.UI.Xaml.SunburstChart;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,9 @@ namespace ST10083735_PROG6221_POE
     /// </summary>
     public partial class MainWindow : Window
     {
+        //Create a model for the data to be displayed on the chart
+        MainViewModel newModel = new MainViewModel();
+
         //This dictionary contains the expenses the user inputs as well as the names of the expenses
         Dictionary<string, double> expenses = new Dictionary<string, double>();
 
@@ -34,11 +38,10 @@ namespace ST10083735_PROG6221_POE
             mainpnl.Visibility = Visibility.Visible;
             homepnl.Visibility = Visibility.Hidden;
 
-            
         }
 
-        
 
+        //The first button the user will click on which will save their input and move on to the accomodation panel
         private void nextpbx_MouseDown(object sender, MouseButtonEventArgs e)
         {
             double income = 0;
@@ -84,6 +87,7 @@ namespace ST10083735_PROG6221_POE
 
         }
 
+        //This button will save the users input then take them to the vehicles panel
         private void nextpbx2_MouseDown(object sender, MouseButtonEventArgs e)
         {
             double groceries = 0;
@@ -201,6 +205,8 @@ namespace ST10083735_PROG6221_POE
 
         }
 
+
+        //This button will save the users input then display the savings panel
         private void nextpbx3_MouseDown(object sender, MouseButtonEventArgs e)
         {
             modelErrorlb.Visibility = Visibility.Hidden;
@@ -218,6 +224,7 @@ namespace ST10083735_PROG6221_POE
                 if (yesrbtn.IsChecked == true)
                 {
                     string modelAndMake = modeltxt.Text;
+                    //Check that the data is in valid format
                     bool vehiclePurchasePriceValid = newData.isDecimalValid(vehicleCosttxt.Text);
                     bool vehicleDepositValid = newData.isDecimalValid(vehicleDeposittxt.Text);
                     bool vehicleInterestValid = newData.isDecimalValid(vehicleInteresttxt.Text);
@@ -229,7 +236,7 @@ namespace ST10083735_PROG6221_POE
                         modelErrorlb.Visibility = Visibility.Visible;
                         return;
                     }
-                    //if the values are not valid, the erro will be displayed
+                    //if the values are not valid, the error will be displayed
                     else if (vehiclePurchasePriceValid == false || vehicleDepositValid == false || vehicleInterestValid == false || vehicleInsuranceValid == false)
                     {
                         vehicleFormatError.Visibility = Visibility.Visible;
@@ -249,30 +256,32 @@ namespace ST10083735_PROG6221_POE
                         //send values to the vehicle constructor
                         addVehicle = new Vehicle(modelAndMake, vehiclePrice, vehicleDeposit, vehicleInterest, vehicleInsurance);
 
-                        
+
                         //display the savings panel
                         vehiclepnl.Visibility = Visibility.Hidden;
                         savingspnl.Visibility = Visibility.Visible;
 
-                        
+
                     }
                 }
                 else
                 {
 
-                  
+
 
                     //display the home panel
                     vehiclepnl.Visibility = Visibility.Hidden;
                     savingspnl.Visibility = Visibility.Visible;
 
-                   
-                }               
+
+                }
 
 
             }
         }
 
+        //Once the user has completed all inputs, they will then be redirected to the home panel, where they can
+        //view a summary of their expenses
         private void completebtn_Click(object sender, RoutedEventArgs e)
         {
             reasonErrorlb.Visibility = Visibility.Hidden;
@@ -281,6 +290,7 @@ namespace ST10083735_PROG6221_POE
             if (yesrbtn.IsChecked == false && norbtn.IsChecked == false)
             {
                 savingErrorlb.Visibility = Visibility.Visible;
+                return;
             }
             else
             {
@@ -290,17 +300,17 @@ namespace ST10083735_PROG6221_POE
                 if (yesSavebtn.IsChecked == true)
                 {
                     string reason = reasontxt.Text;
+                    //check if the inputs are in valid format
                     bool totalToSaveValid = newData.isDecimalValid(amounttxt.Text);
                     bool interestValid = newData.isDecimalValid(interestSavetxt.Text);
-                    
 
-
+                    //check if they have added a reason
                     if (reason == null || reason == "")
                     {
                         reasonErrorlb.Visibility = Visibility.Visible;
                         return;
                     }
-                    //if the values are not valid, the erro will be displayed
+                    //if the values are not valid, the error will be displayed
                     else if (totalToSaveValid == false || interestValid == false)
                     {
                         savingsFormatErrorlb.Visibility = Visibility.Visible;
@@ -317,8 +327,8 @@ namespace ST10083735_PROG6221_POE
                         int years = Convert.ToInt32(yearsSpn.Value);
 
 
-                        //send values to the vehicle constructor
-                        addSavings = new Savings(reason,totalToSave,years,interest);
+                        //send values to the savings constructor
+                        addSavings = new Savings(reason, totalToSave, years, interest);
 
                         //the complete analyis method will display the expenses and calculate how much the user has spent
                         completeAnalysis();
@@ -333,7 +343,7 @@ namespace ST10083735_PROG6221_POE
                 }
                 else
                 {
-
+                    //the complete analyis method will display the expenses and calculate how much the user has spent
                     completeAnalysis();
 
                     //display the home panel
@@ -378,14 +388,155 @@ namespace ST10083735_PROG6221_POE
 
                     //alert the user that they have a notification
                     MessageBox.Show("You have a new notification", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                    
                 }
-
+                //Make graph button visible
+                viewGraphbtn.Visibility = Visibility.Visible;
 
             }
 
 
 
+        }
+
+        //Add doughnut chart
+        private void Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            //Add data inputted by the user into the data model class
+            populateData();
+
+            //Code Attribution
+            //Link: https://help.syncfusion.com/wpf/sunburst-chart/overview
+            //Author: SyncFusion
+
+            //Create the donut chart
+            SfSunburstChart sunburst = new SfSunburstChart
+            {
+                ValueMemberPath = "Amount",
+                Header = "Portion of Income Spent on Expenses",
+                FontSize = 18,
+                InnerRadius = 0.5,
+                Height = 450,
+                Width = 492,
+
+            };
+
+            //Add a custom color pallette
+            SunburstColorModel colorModel = new SunburstColorModel();
+            LinearGradientBrush brush1 = new LinearGradientBrush();
+            brush1.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(121, 173, 220), Offset = 0 });
+
+
+            LinearGradientBrush brush2 = new LinearGradientBrush();
+            brush2.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(255, 192, 159), Offset = 0 });
+
+
+            LinearGradientBrush brush3 = new LinearGradientBrush();
+            brush3.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(173, 247, 182), Offset = 0 });
+
+
+            LinearGradientBrush brush4 = new LinearGradientBrush();
+            brush4.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(255, 136, 220), Offset = 0 });
+
+            LinearGradientBrush brush5 = new LinearGradientBrush();
+            brush5.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(208, 0, 0), Offset = 0 });
+
+            LinearGradientBrush brush6 = new LinearGradientBrush();
+            brush6.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(0, 56, 68), Offset = 0 });
+
+            LinearGradientBrush brush7 = new LinearGradientBrush();
+            brush7.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(250, 188, 42), Offset = 0 });
+
+            LinearGradientBrush brush8 = new LinearGradientBrush();
+            brush8.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(252, 170, 103), Offset = 0 });
+
+            LinearGradientBrush brush9 = new LinearGradientBrush();
+            brush9.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(140, 83, 131), Offset = 0 });
+
+            LinearGradientBrush brush10 = new LinearGradientBrush();
+            brush10.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(255, 231, 76), Offset = 0 });
+
+            colorModel.CustomBrushes.Add(brush1);
+            colorModel.CustomBrushes.Add(brush2);
+            colorModel.CustomBrushes.Add(brush3);
+            colorModel.CustomBrushes.Add(brush4);
+            colorModel.CustomBrushes.Add(brush5);
+            colorModel.CustomBrushes.Add(brush6);
+            colorModel.CustomBrushes.Add(brush7);
+            colorModel.CustomBrushes.Add(brush8);
+            colorModel.CustomBrushes.Add(brush9);
+            colorModel.CustomBrushes.Add(brush10);
+
+            //Add the color model to the chart
+            sunburst.ColorModel = colorModel;
+            sunburst.Palette = SunburstColorPalette.Custom;
+
+            //Bind the chart with the data
+            sunburst.SetBinding(SfSunburstChart.ItemsSourceProperty, "Data");
+            sunburst.Levels.Add(new SunburstHierarchicalLevel() { GroupMemberPath = "Expense" });
+
+            //Chart Legend Customization
+            SunburstLegend legend = new SunburstLegend
+            {
+                DockPosition = ChartDock.Left,
+                FontSize = 16,
+                ClickAction = LegendClickAction.ToggleSegmentVisibility
+            };
+
+            //Add legend to chart
+            sunburst.Legend = legend;
+
+            //Add tool tips to chart
+            SunburstToolTipBehavior tooltip = new SunburstToolTipBehavior();
+            tooltip.ShowToolTip = true;
+            sunburst.Behaviors.Add(tooltip);
+
+            Content = sunburst;
+            DataContext = newModel;
+
+            //End Code attribution
+        }
+
+        public void populateData()
+        {
+            //Add user input data to the expense model to be displayed on the doughnut chart
+            List<ExpensesModel> addData = new List<ExpensesModel>
+                {
+                    new ExpensesModel { Expense = "Tax",Amount = addIncome.Tax },
+                    new ExpensesModel { Expense = "Groceries",Amount = ReturnChosenObj().Groceries },
+                    new ExpensesModel { Expense = "Water and Lights", Amount = ReturnChosenObj().Utilities },
+                    new ExpensesModel { Expense = "Travel", Amount = ReturnChosenObj().Travel },
+                    new ExpensesModel { Expense = "Phone", Amount = ReturnChosenObj().Phone },
+                    new ExpensesModel { Expense = "Other", Amount =  ReturnChosenObj().Other }
+                };
+
+            //Add rent data if the user chose to rent
+            if (rentgrp.IsChecked == true)
+            {
+
+                addData.Add(new ExpensesModel { Expense = "Rent", Amount = addRentExpense.MonthlyRent });
+            }
+            else
+            {
+                //Add buy data if the user chose to buy
+                addData.Add(new ExpensesModel { Expense = "Deposit", Amount = addBuyingExpense.TotalDeposit });
+                addData.Add(new ExpensesModel { Expense = "Monthly Repayment(Home)", Amount = addBuyingExpense.calcMonthlyRepayment() });
+            }
+
+            //Add vehicle data if the user chose to buy a vehicle
+            if (yesrbtn.IsChecked == true)
+            {
+                addData.Add(new ExpensesModel { Expense = "Vehicle Repayment", Amount = addVehicle.totalMonthlyCost() });
+            }
+
+            //Add savings data if the user chose to save money
+            if (yesSavebtn.IsChecked == true)
+            {
+                addData.Add(new ExpensesModel { Expense = "Savings Deposit(Per Month)", Amount = addSavings.totalCost() });
+            }
+
+            //add the list to the data model
+            newModel.Data = addData;
         }
 
         //Create delegate for the function that
@@ -449,7 +600,9 @@ namespace ST10083735_PROG6221_POE
             {
                 rangeOfText1.Text = "You have a negative balance of ";
             }
-            rangeOfText1.ApplyPropertyValue(TextElement.FontFamilyProperty, "Calibri Light");            
+
+            //Customize the font/color of the text
+            rangeOfText1.ApplyPropertyValue(TextElement.FontFamilyProperty, "Calibri Light");
             rangeOfText1.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
 
             //Different colour and font for the amount
@@ -467,6 +620,7 @@ namespace ST10083735_PROG6221_POE
                 //if the value is negative find the absolute value
                 rangeOfWord.Text = "- R" + Math.Abs(moneyAfterExpenses);
             }
+            //Customize the font/color of the text
             rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, mySolidColorBrush);
             rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.ExtraBold);
             rangeOfWord.ApplyPropertyValue(TextElement.FontFamilyProperty, "Verdana");
@@ -483,6 +637,7 @@ namespace ST10083735_PROG6221_POE
             //store the total percentage the user spent in a variable
             double percentageSpent = percentageOfIncome();
             rangeOfText2.Text += "\nYou have spent ";
+            //Customize the font/color of the text
             rangeOfText2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
             rangeOfText2.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
             rangeOfText2.ApplyPropertyValue(TextElement.FontFamilyProperty, "Calibri Light");
@@ -490,12 +645,14 @@ namespace ST10083735_PROG6221_POE
             //Code to make the percentage amount a different color and font
             TextRange textRange3 = new TextRange(analysisCostsrtbx.Document.ContentEnd, analysisCostsrtbx.Document.ContentEnd);
             textRange3.Text = percentageSpent + "% ";
+            //Customize the font/color of the text
             textRange3.ApplyPropertyValue(TextElement.ForegroundProperty, mySolidColorBrush);
             textRange3.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.ExtraBold);
             textRange3.ApplyPropertyValue(TextElement.FontFamilyProperty, "Verdana");
 
             TextRange rangeOfText4 = new TextRange(analysisCostsrtbx.Document.ContentEnd, analysisCostsrtbx.Document.ContentEnd);
             rangeOfText4.Text = "of your income.";
+            //Customize the font/color of the text
             rangeOfText4.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
             rangeOfText4.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
             rangeOfText4.ApplyPropertyValue(TextElement.FontFamilyProperty, "Calibri Light");
@@ -568,6 +725,7 @@ namespace ST10083735_PROG6221_POE
 
             }
 
+            //if the user chose to save, add the values to the dictionary
             if (yesSavebtn.IsChecked == true)
             {
                 double savingsPerMonth = addSavings.totalCost();
@@ -648,6 +806,7 @@ namespace ST10083735_PROG6221_POE
 
         private void startbtn_Click(object sender, RoutedEventArgs e)
         {
+            //show home panel
             mainpnl.Visibility = Visibility.Hidden;
             homepnl.Visibility = Visibility.Visible;
 
@@ -655,6 +814,7 @@ namespace ST10083735_PROG6221_POE
 
         private void searchBarbtn_Click(object sender, RoutedEventArgs e)
         {
+            //allow user to input a search term
             searchtxt.Visibility = Visibility.Visible;
             searchtxt.Focus();
             searchBarbtn.IsEnabled = false;
@@ -662,20 +822,23 @@ namespace ST10083735_PROG6221_POE
 
         private void exitimg_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            //exit application
             System.Windows.Application.Current.Shutdown();
         }
 
         private void bellpbx_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            //show  the notification panel
             homepnl.Visibility = Visibility.Hidden;
             notificationpnl.Visibility = Visibility.Visible;
 
             //add date to the notification
             DateTime now = DateTime.Now;
 
+            //Update the times on the labels whenever the user clicks it
             switch (notificationInfolb.Content)
             {
-                //Update the times on the labels
+
                 case string info when (info.Contains("Nothing here yet.")):
                     notificationInfolb.Content = "Nothing here yet.\n" + now.ToString("F");
                     break;
@@ -688,6 +851,7 @@ namespace ST10083735_PROG6221_POE
                     break;
             }
 
+
             switch (notiflb2.Content)
             {
                 case string info when (info.Contains("Your total expenses exceed 75% of your income.")):
@@ -697,22 +861,7 @@ namespace ST10083735_PROG6221_POE
             }
         }
 
-        private void exitNotifpb_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            homepnl.Visibility = Visibility.Visible;
-            notificationpnl.Visibility = Visibility.Hidden;
-        }
-
-        private void exitSearchpbx_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            resultNamelb.Visibility = Visibility.Hidden;
-            resultCostlb.Visibility = Visibility.Hidden;
-            searchResultspbx.Visibility = Visibility.Hidden;
-            searchpnl.Visibility = Visibility.Hidden;
-            homepnl.Visibility = Visibility.Visible;
-            searchtxt.Text = "";
-            aboutrtb.Visibility = Visibility.Hidden;
-        }
+        //Return the object the user chose either rent or buying
         private Expense ReturnChosenObj()
         {
             Rent ifObjectWasNotCreated = new Rent(0, 0, 0, 0, 0, 0);
@@ -755,86 +904,123 @@ namespace ST10083735_PROG6221_POE
                         resultCostlb.Content = "R" + ReturnChosenObj().Utilities.ToString();
                         //make search components visible
                         showSearchResults();
-                        //cala=culate the percentage of income spent on the expense
+                        //calaculate the percentage of income spent on the expense
                         expensePercentageOfIncome(ReturnChosenObj().Utilities);
                         break;
                     case string search1 when search1.Contains("income") || search1.Contains("salary"):
+                        //change the heading of the expense depending on what the user chose
                         resultNamelb.Content = "Income";
                         resultCostlb.Content = "R" + addIncome.GrossIncome.ToString();
+                        //make search components visible
                         showSearchResults();
                         aboutrtb.Visibility = Visibility.Hidden;
                         break;
                     case string search1 when search1.Contains("groceries"):
+                        //change the heading of the expense depending on what the user chose
                         resultNamelb.Content = "Groceries";
                         resultCostlb.Content = "R" + ReturnChosenObj().Groceries.ToString();
+                        //make search components visible
                         showSearchResults();
+                        //calaculate the percentage of income spent on the expense
                         expensePercentageOfIncome(ReturnChosenObj().Groceries);
                         break;
                     case string search1 when search1.Contains("phone") || search1.Contains("cel") || search1.Contains("tel"):
+                        //change the heading of the expense depending on what the user chose
                         resultNamelb.Content = "Cellphone/telephone";
                         resultCostlb.Content = "R" + ReturnChosenObj().Phone.ToString();
+                        //make search components visible
                         showSearchResults();
-                        expensePercentageOfIncome(ReturnChosenObj().Phone);
+                        //calaculate the percentage of income spent on the expense(ReturnChosenObj().Phone);
                         break;
                     case string search1 when search1.Contains("travel") || search1.Contains("petrol"):
+                        //change the heading of the expense depending on what the user chose
                         resultNamelb.Content = "Travel(incl petrol)";
                         resultCostlb.Content = "R" + ReturnChosenObj().Travel.ToString();
+                        //make search components visible
                         showSearchResults();
+                        //calaculate the percentage of income spent on the expense
                         expensePercentageOfIncome(ReturnChosenObj().Travel);
                         break;
                     case string search1 when search1.Contains("other"):
+                        //change the heading of the expense depending on what the user chose
                         resultNamelb.Content = "Other";
                         resultCostlb.Content = "R" + ReturnChosenObj().Other.ToString();
+                        //make search components visible
                         showSearchResults();
+                        //calaculate the percentage of income spent on the expense
                         expensePercentageOfIncome(ReturnChosenObj().Other);
                         break;
                     case string search1 when search1.Contains("tax"):
+                        //change the heading of the expense depending on what the user chose
                         resultNamelb.Content = "Tax";
                         resultCostlb.Content = "R" + addIncome.Tax.ToString();
+                        //make search components visible
                         showSearchResults();
+                        //calaculate the percentage of income spent on the expense
                         expensePercentageOfIncome(addIncome.Tax);
                         break;
                     case string search1 when search1.Contains("rent") && rentgrp.IsChecked == true:
+                        //change the heading of the expense depending on what the user chose
                         resultNamelb.Content = "Monthly Rent";
                         resultCostlb.Content = "R" + addRentExpense.MonthlyRent.ToString();
+                        //make search components visible
                         showSearchResults();
+                        //calaculate the percentage of income spent on the expense
                         expensePercentageOfIncome(addRentExpense.MonthlyRent);
 
                         break;
                     case string search1 when (search1.Contains("house deposit") || search1.Contains("home deposit")) && buygrp.IsChecked == true:
+                        //change the heading of the expense depending on what the user chose
                         resultNamelb.Content = "Home Deposit";
                         resultCostlb.Content = "R" + addBuyingExpense.TotalDeposit.ToString();
+                        //make search components visible
                         showSearchResults();
+                        //calaculate the percentage of income spent on the expense
                         expensePercentageOfIncome(addBuyingExpense.TotalDeposit);
                         break;
                     case string search1 when (search1.Contains("home repay") || search1.Contains("house repay")) && buygrp.IsChecked == true:
+                        //change the heading of the expense depending on what the user chose
                         resultNamelb.Content = "Home Repayment";
                         resultCostlb.Content = "R" + addBuyingExpense.calcMonthlyRepayment().ToString();
+                        //make search components visible
                         showSearchResults();
+                        //calaculate the percentage of income spent on the expense
                         expensePercentageOfIncome(addBuyingExpense.calcMonthlyRepayment());
                         break;
                     case string search1 when (search1.Contains("car deposit") || search1.Contains("vehicle deposit")) && yesrbtn.IsChecked == true:
+                        //change the heading of the expense depending on what the user chose
                         resultNamelb.Content = "Vehicle Deposit";
                         resultCostlb.Content = "R" + addVehicle.Deposit.ToString();
+                        //make search components visible
                         showSearchResults();
+                        //calaculate the percentage of income spent on the expense
                         expensePercentageOfIncome(addVehicle.Deposit);
                         break;
                     case string search1 when (search1.Contains("car payment") || search1.Contains("vehicle pay") || search1.Contains("car repay") || search1.Contains("vehicle repayment")) && yesrbtn.IsChecked == true:
+                        //change the heading of the expense depending on what the user chose
                         resultNamelb.Content = "Vehicle Repayment";
                         resultCostlb.Content = "R" + addVehicle.totalMonthlyCost();
+                        //make search components visible
                         showSearchResults();
+                        //calaculate the percentage of income spent on the expense
                         expensePercentageOfIncome(addVehicle.totalMonthlyCost());
                         break;
                     case string search1 when (search1.Contains("insurance")) && yesrbtn.IsChecked == true:
+                        //change the heading of the expense depending on what the user chose
                         resultNamelb.Content = "Vehicle Insurance";
                         resultCostlb.Content = "R" + addVehicle.EstInsurancePremium.ToString();
+                        //make search components visible
                         showSearchResults();
+                        //calaculate the percentage of income spent on the expense
                         expensePercentageOfIncome(addVehicle.EstInsurancePremium);
                         break;
                     case string search1 when (search1.Contains("save") || search1.Contains("saving")) && yesSavebtn.IsChecked == true:
+                        //change the heading of the expense depending on what the user chose
                         resultNamelb.Content = "Savings Deposit Per Month";
                         resultCostlb.Content = "R" + addSavings.totalCost().ToString();
+                        //make search components visible
                         showSearchResults();
+                        //calaculate the percentage of income spent on the expense
                         expensePercentageOfIncome(addSavings.totalCost());
                         break;
                     default:
@@ -877,6 +1063,7 @@ namespace ST10083735_PROG6221_POE
 
             TextRange rangeOfText1 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
             rangeOfText1.Text = "You have spent ";
+            //Customize font/color of text
             rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
             rangeOfText1.ApplyPropertyValue(TextElement.FontFamilyProperty, "Calibri Light");
 
@@ -884,12 +1071,14 @@ namespace ST10083735_PROG6221_POE
 
             TextRange rangeOfWord = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
             rangeOfWord.Text = percentage + "% ";
+            //Customize font/color of text
             rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, mySolidColorBrush);
             rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
             rangeOfWord.ApplyPropertyValue(TextElement.FontFamilyProperty, "Verdana");
 
             TextRange rangeOfText2 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
             rangeOfText2.Text = "of your income on this expense.";
+            //Customize font/color of text
             rangeOfText2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
             rangeOfText2.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
             rangeOfText2.ApplyPropertyValue(TextElement.FontFamilyProperty, "Calibri Light");
@@ -926,6 +1115,27 @@ namespace ST10083735_PROG6221_POE
             }
         }
 
+        private void exitNotifpb_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //show home panel
+            homepnl.Visibility = Visibility.Visible;
+            notificationpnl.Visibility = Visibility.Hidden;
+        }
+
+        private void exitSearchpbx_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //make search components invisible
+            resultNamelb.Visibility = Visibility.Hidden;
+            resultCostlb.Visibility = Visibility.Hidden;
+            searchResultspbx.Visibility = Visibility.Hidden;
+            searchpnl.Visibility = Visibility.Hidden;
+            homepnl.Visibility = Visibility.Visible;
+            searchtxt.Text = "";
+            aboutrtb.Visibility = Visibility.Hidden;
+        }
+
+
+        //Data input/naviagtion methods
         private void editincomepbx_MouseDown(object sender, MouseButtonEventArgs e)
         {
             editFigure(incomeCostlb, incometxt);
@@ -1233,12 +1443,12 @@ namespace ST10083735_PROG6221_POE
         private void amounttxt_KeyDown(object sender, KeyEventArgs e)
         {
             enterAmount(e, amountSacelb, amounttxt);
-            
+
         }
 
         private void yearsSpn_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 if (yearsSpn.Visibility == Visibility.Visible)
                 {
@@ -1252,7 +1462,7 @@ namespace ST10083735_PROG6221_POE
                     yearsSpn.Visibility = Visibility.Visible;
                 }
             }
-            
+
         }
 
         private void interestSavetxt_KeyDown(object sender, KeyEventArgs e)
@@ -1272,7 +1482,7 @@ namespace ST10083735_PROG6221_POE
             {
                 reasonSavelb.Content = reasontxt.Text;
             }
-            
+
         }
 
         private void edittAmountpbx_MouseDown(object sender, MouseButtonEventArgs e)
@@ -1288,7 +1498,7 @@ namespace ST10083735_PROG6221_POE
                 yearsSavelb.Content = yearsSpn.Value + " years";
                 yearsSavelb.Visibility = Visibility.Visible;
             }
-            else if(yearsSpn.Visibility == Visibility.Hidden)
+            else if (yearsSpn.Visibility == Visibility.Hidden)
             {
                 yearsSavelb.Visibility = Visibility.Hidden;
                 yearsSpn.Visibility = Visibility.Visible;
@@ -1321,6 +1531,19 @@ namespace ST10083735_PROG6221_POE
         {
             vehiclepnl.Visibility = Visibility.Hidden;
             accomodationpnl.Visibility = Visibility.Visible;
+        }
+
+
+        private void viewGraphbtn_Click(object sender, RoutedEventArgs e)
+        {
+            homepnl.Visibility = Visibility.Hidden;
+            analysispnl.Visibility = Visibility.Visible;
+        }
+
+        private void exitgraphpbx_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            analysispnl.Visibility = Visibility.Hidden;
+            homepnl.Visibility = Visibility.Visible;
         }
     }
 }

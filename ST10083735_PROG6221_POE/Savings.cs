@@ -40,14 +40,14 @@ namespace ST10083735_PROG6221_POE
             double step3 = amountToSave / step2;
             amountPerMonth = Math.Round(step3, 2); 
 
-            MessageBox.Show(amountPerMonth.ToString());
+            
             return amountPerMonth;
         }
 
         public override double totalCost()
         {
             double total = calculateAmountToSavePerMonth();
-            MessageBox.Show(total.ToString());
+            
             return total;
         }
     }
