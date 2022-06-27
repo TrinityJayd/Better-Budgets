@@ -1537,6 +1537,7 @@ namespace ST10083735_PROG6221_POE
         private void viewGraphbtn_Click(object sender, RoutedEventArgs e)
         {
             homepnl.Visibility = Visibility.Hidden;
+            chartpnl.Visibility = Visibility.Visible;
             analysispnl.Visibility = Visibility.Visible;
         }
 
