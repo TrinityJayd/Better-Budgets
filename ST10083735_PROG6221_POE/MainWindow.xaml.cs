@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Infragistics.Controls.Charts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -25,14 +26,18 @@ namespace ST10083735_PROG6221_POE
         HomeLoan addBuyingExpense = new HomeLoan(0, 0, 0, 0, 0, 0, 0, 0, 0);
         Rent addRentExpense = new Rent(0, 0, 0, 0, 0, 0);
         Vehicle addVehicle = new Vehicle("", 0, 0, 0, 0);
+        Savings addSavings = new Savings("", 0, 0, 0);
 
         public MainWindow()
         {
             InitializeComponent();
             mainpnl.Visibility = Visibility.Visible;
             homepnl.Visibility = Visibility.Hidden;
+
+            
         }
 
+        
 
         private void nextpbx_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -244,12 +249,83 @@ namespace ST10083735_PROG6221_POE
                         //send values to the vehicle constructor
                         addVehicle = new Vehicle(modelAndMake, vehiclePrice, vehicleDeposit, vehicleInterest, vehicleInsurance);
 
-                        //the complete analyis method will display the expenses and calculate how much the user has spent
-                        completeAnalysis();
-
+                        
                         //display the savings panel
                         vehiclepnl.Visibility = Visibility.Hidden;
                         savingspnl.Visibility = Visibility.Visible;
+
+                        
+                    }
+                }
+                else
+                {
+
+                  
+
+                    //display the home panel
+                    vehiclepnl.Visibility = Visibility.Hidden;
+                    savingspnl.Visibility = Visibility.Visible;
+
+                   
+                }               
+
+
+            }
+        }
+
+        private void completebtn_Click(object sender, RoutedEventArgs e)
+        {
+            reasonErrorlb.Visibility = Visibility.Hidden;
+            savingsFormatErrorlb.Visibility = Visibility.Hidden;
+            //If the user hasnt chosen yes or no an error will be displayed
+            if (yesrbtn.IsChecked == false && norbtn.IsChecked == false)
+            {
+                savingErrorlb.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                savingErrorlb.Visibility = Visibility.Hidden;
+
+                //If they have chosen yes then check if the values are in the correct format
+                if (yesSavebtn.IsChecked == true)
+                {
+                    string reason = reasontxt.Text;
+                    bool totalToSaveValid = newData.isDecimalValid(amounttxt.Text);
+                    bool interestValid = newData.isDecimalValid(interestSavetxt.Text);
+                    
+
+
+                    if (reason == null || reason == "")
+                    {
+                        reasonErrorlb.Visibility = Visibility.Visible;
+                        return;
+                    }
+                    //if the values are not valid, the erro will be displayed
+                    else if (totalToSaveValid == false || interestValid == false)
+                    {
+                        savingsFormatErrorlb.Visibility = Visibility.Visible;
+                        return;
+                    }
+                    else
+                    {
+                        reasonErrorlb.Visibility = Visibility.Hidden;
+                        savingsFormatErrorlb.Visibility = Visibility.Hidden;
+
+                        //if the values are valid then they are stored
+                        double totalToSave = Convert.ToDouble(amounttxt.Text);
+                        double interest = Convert.ToDouble(interestSavetxt.Text);
+                        int years = Convert.ToInt32(yearsSpn.Value);
+
+
+                        //send values to the vehicle constructor
+                        addSavings = new Savings(reason,totalToSave,years,interest);
+
+                        //the complete analyis method will display the expenses and calculate how much the user has spent
+                        completeAnalysis();
+
+                        //display the home panel                        
+                        savingspnl.Visibility = Visibility.Hidden;
+                        homepnl.Visibility = Visibility.Visible;
 
                         //make the button that allows the user to order the expenses visible
                         Orderbtn.Visibility = Visibility.Visible;
@@ -261,7 +337,7 @@ namespace ST10083735_PROG6221_POE
                     completeAnalysis();
 
                     //display the home panel
-                    vehiclepnl.Visibility = Visibility.Hidden;
+                    savingspnl.Visibility = Visibility.Hidden;
                     homepnl.Visibility = Visibility.Visible;
 
                     Orderbtn.Visibility = Visibility.Visible;
@@ -307,13 +383,8 @@ namespace ST10083735_PROG6221_POE
 
 
             }
-        }
 
-        private void completebtn_Click(object sender, RoutedEventArgs e)
-        {
-            
 
-            
 
         }
 
@@ -378,7 +449,7 @@ namespace ST10083735_PROG6221_POE
             {
                 rangeOfText1.Text = "You have a negative balance of ";
             }
-            rangeOfText1.ApplyPropertyValue(TextElement.FontFamilyProperty, "Verdana");
+            rangeOfText1.ApplyPropertyValue(TextElement.FontFamilyProperty, "Calibri Light");            
             rangeOfText1.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
 
             //Different colour and font for the amount
@@ -414,17 +485,20 @@ namespace ST10083735_PROG6221_POE
             rangeOfText2.Text += "\nYou have spent ";
             rangeOfText2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
             rangeOfText2.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
+            rangeOfText2.ApplyPropertyValue(TextElement.FontFamilyProperty, "Calibri Light");
 
             //Code to make the percentage amount a different color and font
             TextRange textRange3 = new TextRange(analysisCostsrtbx.Document.ContentEnd, analysisCostsrtbx.Document.ContentEnd);
             textRange3.Text = percentageSpent + "% ";
             textRange3.ApplyPropertyValue(TextElement.ForegroundProperty, mySolidColorBrush);
             textRange3.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.ExtraBold);
+            textRange3.ApplyPropertyValue(TextElement.FontFamilyProperty, "Verdana");
 
             TextRange rangeOfText4 = new TextRange(analysisCostsrtbx.Document.ContentEnd, analysisCostsrtbx.Document.ContentEnd);
             rangeOfText4.Text = "of your income.";
             rangeOfText4.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
             rangeOfText4.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
+            rangeOfText4.ApplyPropertyValue(TextElement.FontFamilyProperty, "Calibri Light");
 
 
         }
@@ -492,6 +566,12 @@ namespace ST10083735_PROG6221_POE
                 expenses.Add("Vehicle Deposit", addVehicle.Deposit);
                 expenses.Add("Vehicle Repayment(incl. Insurance)", monthlyRepayment);
 
+            }
+
+            if (yesSavebtn.IsChecked == true)
+            {
+                double savingsPerMonth = addSavings.totalCost();
+                expenses.Add("Savings Deposit Per Month", savingsPerMonth);
             }
 
 
@@ -751,6 +831,12 @@ namespace ST10083735_PROG6221_POE
                         showSearchResults();
                         expensePercentageOfIncome(addVehicle.EstInsurancePremium);
                         break;
+                    case string search1 when (search1.Contains("save") || search1.Contains("saving")) && yesSavebtn.IsChecked == true:
+                        resultNamelb.Content = "Savings Deposit Per Month";
+                        resultCostlb.Content = "R" + addSavings.totalCost().ToString();
+                        showSearchResults();
+                        expensePercentageOfIncome(addSavings.totalCost());
+                        break;
                     default:
                         //if the search does not match anything show that there are no results
                         noResultslb.Visibility = Visibility.Visible;
@@ -792,6 +878,7 @@ namespace ST10083735_PROG6221_POE
             TextRange rangeOfText1 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
             rangeOfText1.Text = "You have spent ";
             rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
+            rangeOfText1.ApplyPropertyValue(TextElement.FontFamilyProperty, "Calibri Light");
 
             SolidColorBrush mySolidColorBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#60b64f");
 
@@ -799,11 +886,13 @@ namespace ST10083735_PROG6221_POE
             rangeOfWord.Text = percentage + "% ";
             rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, mySolidColorBrush);
             rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+            rangeOfWord.ApplyPropertyValue(TextElement.FontFamilyProperty, "Verdana");
 
             TextRange rangeOfText2 = new TextRange(aboutrtb.Document.ContentEnd, aboutrtb.Document.ContentEnd);
             rangeOfText2.Text = "of your income on this expense.";
             rangeOfText2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
             rangeOfText2.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
+            rangeOfText2.ApplyPropertyValue(TextElement.FontFamilyProperty, "Calibri Light");
 
         }
 
@@ -1131,30 +1220,39 @@ namespace ST10083735_PROG6221_POE
         private void reasontxt_KeyDown(object sender, KeyEventArgs e)
         {
             enterAmount(e, reasonSavelb, reasontxt);
+            if (reasontxt.Text.Equals(""))
+            {
+                reasontxt.Text = "";
+            }
+            else
+            {
+                reasonSavelb.Content = reasontxt.Text;
+            }
         }
 
         private void amounttxt_KeyDown(object sender, KeyEventArgs e)
         {
             enterAmount(e, amountSacelb, amounttxt);
-            if (reasontxt.Text.Equals(""))
-            {
-                reasontxt.Text = "";
-            }
+            
         }
 
         private void yearsSpn_KeyDown(object sender, KeyEventArgs e)
         {
-            if (yearsSpn.Visibility == Visibility.Visible)
+            if(e.Key == Key.Enter)
             {
-                yearsSpn.Visibility = Visibility.Hidden;
-                yearsSavelb.Content = yearsSpn.Value + " years";
-                yearsSavelb.Visibility = Visibility.Visible;
+                if (yearsSpn.Visibility == Visibility.Visible)
+                {
+                    yearsSpn.Visibility = Visibility.Hidden;
+                    yearsSavelb.Content = yearsSpn.Value + " years";
+                    yearsSavelb.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    yearsSavelb.Visibility = Visibility.Hidden;
+                    yearsSpn.Visibility = Visibility.Visible;
+                }
             }
-            else
-            {
-                yearsSavelb.Visibility = Visibility.Hidden;
-                yearsSpn.Visibility = Visibility.Visible;
-            }
+            
         }
 
         private void interestSavetxt_KeyDown(object sender, KeyEventArgs e)
@@ -1170,6 +1268,11 @@ namespace ST10083735_PROG6221_POE
             {
                 reasontxt.Text = "";
             }
+            else
+            {
+                reasonSavelb.Content = reasontxt.Text;
+            }
+            
         }
 
         private void edittAmountpbx_MouseDown(object sender, MouseButtonEventArgs e)
@@ -1202,6 +1305,22 @@ namespace ST10083735_PROG6221_POE
         {
             savingspnl.Visibility = Visibility.Hidden;
             vehiclepnl.Visibility = Visibility.Visible;
+        }
+
+        private void yesSavebtn_Checked(object sender, RoutedEventArgs e)
+        {
+            savingsInputpnl.Visibility = Visibility.Visible;
+        }
+
+        private void noSavebtn_Checked(object sender, RoutedEventArgs e)
+        {
+            savingsInputpnl.Visibility = Visibility.Hidden;
+        }
+
+        private void previouspbx1_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            vehiclepnl.Visibility = Visibility.Hidden;
+            accomodationpnl.Visibility = Visibility.Visible;
         }
     }
 }

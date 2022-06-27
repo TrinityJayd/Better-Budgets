@@ -130,7 +130,7 @@
         <Canvas x:Name="searchpnl" HorizontalAlignment="Left" Height="745" Margin="12,0,0,0" VerticalAlignment="Top" Width="622" Visibility="Hidden" Grid.ColumnSpan="3">
             <Label x:Name="resultslb" Content="Results for " Height="40" Canvas.Left="10" Canvas.Top="10" Width="580" FontSize="30" FontWeight="Normal" RenderTransformOrigin="4.778,1.607"/>
             <Image x:Name="searchResultspbx" Height="63" Canvas.Left="17" Canvas.Top="103" Width="71" Source="/search-icon.png"/>
-            <Label x:Name="resultNamelb" Content="Results Text Here." Height="31" Canvas.Left="106" Canvas.Top="103" Width="323" FontSize="20"/>
+            <Label x:Name="resultNamelb" Content="Results Text Here." Canvas.Left="106" Canvas.Top="103" FontSize="20"/>
             <Label x:Name="resultCostlb" Content="R0" Canvas.Left="106" Canvas.Top="139" FontSize="18" FontWeight="Bold" Foreground="#FF60B64F"/>
             <Image x:Name="exitSearchpbx" Height="49" Canvas.Left="541" Canvas.Top="676" Width="49" Source="/exit-icon.png" MouseDown="exitSearchpbx_MouseDown" RenderTransformOrigin="0.62,0.789"/>
             <RichTextBox x:Name="aboutrtb" Height="105" Canvas.Left="106" Canvas.Top="171" Width="379" BorderBrush="White" IsReadOnly="True" BorderThickness="0" FontFamily="Verdana" FontSize="20">
@@ -255,7 +255,7 @@
             </Canvas>
             <Label x:Name="vehicleErrorlb" Content="Please choose if you are buying a vehicle or not." Canvas.Left="115" Canvas.Top="565" FontSize="16" Visibility="Hidden"/>
             <Label x:Name="vehicleFormatError" Content="There are errors with you amounts please try again.&#xA;&#x9;All decimals must use a period (.)&#xA;&#x9;   and no spaces are allowed." Canvas.Left="95" Canvas.Top="556" Height="76" FontSize="16" Visibility="Hidden" />
-            <Image x:Name="previouspbx1" Height="52" Canvas.Left="25" Canvas.Top="650" Width="51" Source="/back-icon.png" MouseDown="previouspbx_MouseDown"/>
+            <Image x:Name="previouspbx1" Height="52" Canvas.Left="25" Canvas.Top="650" Width="51" Source="/back-icon.png" MouseDown="previouspbx1_MouseDown"/>
             <Label x:Name="choicelb" Content="Are you purchasing a vehicle?" Canvas.Left="25" Canvas.Top="85" FontSize="16"/>
             <Label x:Name="modelErrorlb" Content="Please enter the vehicle model/make." Canvas.Left="158" Canvas.Top="573" FontSize="16" Visibility="Hidden"/>
             <Image x:Name="nextpbx3" Height="52" Canvas.Left="546" Canvas.Top="652" Width="51" Source="/next-icon.png" MouseDown="nextpbx3_MouseDown"/>
@@ -263,9 +263,9 @@
         <Canvas x:Name="savingspnl" Grid.ColumnSpan="3" Margin="29,18,-622,32" Visibility="Hidden">
             <Label x:Name="savingslb" Content="Savings" Canvas.Left="10" Canvas.Top="10" FontSize="30" FontWeight="Normal"/>
             <Label x:Name="savingsChoicelb" Content="Do you have a savings account?" Canvas.Left="22" Canvas.Top="86" FontSize="16"/>
-            <RadioButton x:Name="yesSavebtn" Content="Yes" Canvas.Left="317" Canvas.Top="92" FontSize="16"/>
-            <RadioButton x:Name="noSavebtn" Content="No" Canvas.Left="412" Canvas.Top="92" FontSize="16"/>
-            <Canvas x:Name="savingsInputpnl" Height="348" Canvas.Left="23" Canvas.Top="152" Width="542">
+            <RadioButton x:Name="yesSavebtn" Content="Yes" Canvas.Left="317" Canvas.Top="92" FontSize="16" Checked="yesSavebtn_Checked"/>
+            <RadioButton x:Name="noSavebtn" Content="No" Canvas.Left="412" Canvas.Top="92" FontSize="16" Checked="noSavebtn_Checked"/>
+            <Canvas x:Name="savingsInputpnl" Height="348" Canvas.Left="10" Canvas.Top="120" Width="542" Visibility="Hidden">
                 <Image x:Name="savingspbx1" Height="52" Canvas.Left="15" Canvas.Top="30" Width="51" Source="/savings.png"/>
                 <Image x:Name="savingspbx2" Height="52" Canvas.Left="15" Canvas.Top="103" Width="51" Source="/savings.png"/>
                 <Image x:Name="savingspbx3" Height="52" Canvas.Left="15" Canvas.Top="190" Width="51" Source="/savings.png"/>
@@ -275,13 +275,13 @@
                 <Image x:Name="editYearspbx" Height="40" Canvas.Left="493" Canvas.Top="196" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="editYearspbx_MouseDown"/>
                 <Image x:Name="editInterestRatepbx" Height="40" Canvas.Left="493" Canvas.Top="283" Width="39" Source="/edit-icon.png" RenderTransformOrigin="0.265,0.5" MouseDown="editInterestRatepbx_MouseDown"/>
                 <Label x:Name="reasonlb" Content="Why do you want to save?" Canvas.Left="84" Canvas.Top="30" FontSize="16"/>
-                <Label x:Name="amountlb" Content="How much do you want to save?" Canvas.Left="84" Canvas.Top="106" FontSize="16"/>
+                <Label x:Name="amountlb" Content="How much do you want to accumulate?" Canvas.Left="84" Canvas.Top="106" FontSize="16"/>
                 <Label x:Name="timelb" Content="For how long do you want to save? (Years)" Canvas.Left="84" Canvas.Top="193" FontSize="16"/>
                 <Label x:Name="interestRateSavingslb" Content="Interest Rate" Canvas.Left="84" Canvas.Top="280" FontSize="16"/>
                 <TextBox x:Name="reasontxt" TextWrapping="Wrap" FontSize="16" Visibility="Hidden" KeyDown="reasontxt_KeyDown" Height="21" Canvas.Left="95" Canvas.Top="60" Width="190"/>
                 <TextBox x:Name="amounttxt" TextWrapping="Wrap" FontSize="16" Visibility="Hidden" KeyDown="amounttxt_KeyDown" Height="21" Canvas.Left="95" Canvas.Top="135" Width="190"/>
                 <TextBox x:Name="interestSavetxt" TextWrapping="Wrap" FontSize="16" Visibility="Hidden" KeyDown="interestSavetxt_KeyDown" Height="21" Canvas.Left="95" Canvas.Top="305" Width="190"/>
-                <syncfusion:UpDown x:Name="yearsSpn" Height="23" Canvas.Left="95" NullValueText="1" Canvas.Top="227" Value="240" Width="73" FontSize="16" NumberDecimalDigits="1" NullValue="0" MinValue="1" MaxValue="50" Visibility="Hidden" KeyDown="yearsSpn_KeyDown"/>
+                <syncfusion:UpDown x:Name="yearsSpn" Height="23" Canvas.Left="95" NullValueText="1" Canvas.Top="227" Value="1" Width="73" FontSize="16" NumberDecimalDigits="0" NullValue="1" MinValue="1" MaxValue="50" Visibility="Hidden" KeyDown="yearsSpn_KeyDown"/>
                 <Label x:Name="reasonSavelb" Content="Enter a reason" Canvas.Left="87" Canvas.Top="56" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
                 <Label x:Name="amountSacelb" Content="R0" Canvas.Left="87" Canvas.Top="135" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
                 <Label x:Name="yearsSavelb" Content="0 years" Canvas.Left="87" Canvas.Top="222" FontSize="16" FontWeight="Bold" Foreground="#FF60B64F" RenderTransformOrigin="0.64,0.707"/>
@@ -312,7 +312,12 @@
                 </Button.Resources>
             </Button>
             <Image x:Name="previouspbx4" Height="52" Canvas.Left="25" Canvas.Top="650" Width="51" Source="/back-icon.png" MouseDown="previouspbx4_MouseDown"/>
+            <Label x:Name="savingsFormatErrorlb" Content="There are errors with you amounts please try again.&#xA;&#x9;All decimals must use a period (.)&#xA;&#x9;   and no spaces are allowed." Canvas.Left="81" Canvas.Top="569" Height="76" FontSize="16" Visibility="Hidden" />
+            <Label x:Name="savingErrorlb" Content="Please choose if you are saving or not." Canvas.Left="136" Canvas.Top="569" FontSize="16" Visibility="Hidden"/>
+            <Label x:Name="reasonErrorlb" Content="Please enter the reason you want to save." Canvas.Left="119" Canvas.Top="569" FontSize="16" Visibility="Hidden"/>
         </Canvas>
+
+
     </Grid>
 
 
