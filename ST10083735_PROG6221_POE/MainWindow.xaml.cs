@@ -287,7 +287,7 @@ namespace ST10083735_PROG6221_POE
             reasonErrorlb.Visibility = Visibility.Hidden;
             savingsFormatErrorlb.Visibility = Visibility.Hidden;
             //If the user hasnt chosen yes or no an error will be displayed
-            if (yesrbtn.IsChecked == false && norbtn.IsChecked == false)
+            if (yesSavebtn.IsChecked == false && noSavebtn.IsChecked == false)
             {
                 savingErrorlb.Visibility = Visibility.Visible;
                 return;
@@ -410,7 +410,7 @@ namespace ST10083735_PROG6221_POE
             //Author: SyncFusion
 
             //Create the donut chart
-            SfSunburstChart sunburst = new SfSunburstChart
+            SfSunburstChart sunburst1 = new SfSunburstChart
             {
                 ValueMemberPath = "Amount",
                 Header = "Portion of Income Spent on Expenses",
@@ -421,6 +421,7 @@ namespace ST10083735_PROG6221_POE
 
             };
 
+           
             //Add a custom color pallette
             SunburstColorModel colorModel = new SunburstColorModel();
             LinearGradientBrush brush1 = new LinearGradientBrush();
@@ -468,12 +469,12 @@ namespace ST10083735_PROG6221_POE
             colorModel.CustomBrushes.Add(brush10);
 
             //Add the color model to the chart
-            sunburst.ColorModel = colorModel;
-            sunburst.Palette = SunburstColorPalette.Custom;
+            sunburst1.ColorModel = colorModel;
+            sunburst1.Palette = SunburstColorPalette.Custom;
 
             //Bind the chart with the data
-            sunburst.SetBinding(SfSunburstChart.ItemsSourceProperty, "Data");
-            sunburst.Levels.Add(new SunburstHierarchicalLevel() { GroupMemberPath = "Expense" });
+            sunburst1.SetBinding(SfSunburstChart.ItemsSourceProperty, "Data");
+            sunburst1.Levels.Add(new SunburstHierarchicalLevel() { GroupMemberPath = "Expense" });
 
             //Chart Legend Customization
             SunburstLegend legend = new SunburstLegend
@@ -484,16 +485,23 @@ namespace ST10083735_PROG6221_POE
             };
 
             //Add legend to chart
-            sunburst.Legend = legend;
+            sunburst1.Legend = legend;
 
             //Add tool tips to chart
             SunburstToolTipBehavior tooltip = new SunburstToolTipBehavior();
             tooltip.ShowToolTip = true;
-            sunburst.Behaviors.Add(tooltip);
+            sunburst1.Behaviors.Add(tooltip);
 
-            Content = sunburst;
-            DataContext = newModel;
+            sunburst1.DataContext = newModel;
+            Canvas.SetLeft(sunburst1, 10);
+            Canvas.SetTop(sunburst1, 91);
+            analysispnl.Children.Add(sunburst1);
+            //analysispnl.Children.Add(expenseAnalysislb);
+           // analysispnl.Children.Add(exitgraphpbx);
 
+            
+            
+           
             //End Code attribution
         }
 
@@ -1537,14 +1545,17 @@ namespace ST10083735_PROG6221_POE
         private void viewGraphbtn_Click(object sender, RoutedEventArgs e)
         {
             homepnl.Visibility = Visibility.Hidden;
-            chartpnl.Visibility = Visibility.Visible;
+           
             analysispnl.Visibility = Visibility.Visible;
         }
 
         private void exitgraphpbx_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            
             analysispnl.Visibility = Visibility.Hidden;
             homepnl.Visibility = Visibility.Visible;
         }
+
+        
     }
 }

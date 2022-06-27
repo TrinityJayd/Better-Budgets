@@ -153,13 +153,13 @@
             <Label x:Name="notiflb2" Content="Nothing here yet." Height="86" Canvas.Left="86" Canvas.Top="220" Width="414" FontFamily="Calibri" FontSize="20" Visibility="Collapsed"/>
             <Image x:Name="exitNotifpb" Height="49" Canvas.Left="544" Canvas.Top="675" Width="49" Source="/exit-icon.png" RenderTransformOrigin="0.62,0.789" MouseDown="exitNotifpb_MouseDown"/>
         </Canvas>
-        <Canvas x:Name="searchpnl" HorizontalAlignment="Left" Height="745" Margin="12,0,0,0" VerticalAlignment="Top" Width="622" Visibility="Hidden" Grid.ColumnSpan="3">
-            <Label x:Name="resultslb" Content="Results for " Height="40" Canvas.Left="10" Canvas.Top="10" Width="580" FontSize="30" FontWeight="Normal" RenderTransformOrigin="4.778,1.607"/>
-            <Image x:Name="searchResultspbx" Height="63" Canvas.Left="17" Canvas.Top="103" Width="71" Source="/search-icon.png"/>
-            <Label x:Name="resultNamelb" Content="Results Text Here." Canvas.Left="106" Canvas.Top="103" FontSize="20"/>
-            <Label x:Name="resultCostlb" Content="R0" Canvas.Left="106" Canvas.Top="139" FontSize="18" FontWeight="Bold" Foreground="#FF60B64F"/>
+        <Canvas x:Name="searchpnl" HorizontalAlignment="Left" Height="745" Margin="12,0,0,0" VerticalAlignment="Top" Width="622" Visibility="Visible" Grid.ColumnSpan="3">
+            <Label x:Name="resultslb" Content="Results for " Canvas.Left="10" Canvas.Top="10" FontSize="30" FontWeight="Normal" RenderTransformOrigin="4.778,1.607"/>
+            <Image x:Name="searchResultspbx" Height="63" Canvas.Left="17" Canvas.Top="103" Width="71" Source="/search-icon.png" Visibility="Hidden"/>
+            <Label x:Name="resultNamelb" Content="Results Text Here." Canvas.Left="106" Canvas.Top="103" FontSize="20" Visibility="Hidden"/>
+            <Label x:Name="resultCostlb" Content="R0" Canvas.Left="106" Canvas.Top="139" FontSize="18" FontWeight="Bold" Foreground="#FF60B64F" Visibility="Hidden"/>
             <Image x:Name="exitSearchpbx" Height="49" Canvas.Left="541" Canvas.Top="676" Width="49" Source="/exit-icon.png" MouseDown="exitSearchpbx_MouseDown" RenderTransformOrigin="0.62,0.789"/>
-            <RichTextBox x:Name="aboutrtb" Height="105" Canvas.Left="106" Canvas.Top="171" Width="379" BorderBrush="White" IsReadOnly="True" BorderThickness="0" FontFamily="Verdana" FontSize="20">
+            <RichTextBox x:Name="aboutrtb" Height="105" Canvas.Left="106" Canvas.Top="171" Width="379" BorderBrush="White" IsReadOnly="True" BorderThickness="0" FontFamily="Verdana" FontSize="20" Visibility="Hidden">
                 <FlowDocument>
                     <Paragraph>
                         <Run Text="You have spent 0% of your income on this expense."/>
@@ -342,11 +342,9 @@
             <Label x:Name="savingErrorlb" Content="Please choose if you are saving or not." Canvas.Left="136" Canvas.Top="569" FontSize="16" Visibility="Hidden"/>
             <Label x:Name="reasonErrorlb" Content="Please enter the reason you want to save." Canvas.Left="119" Canvas.Top="569" FontSize="16" Visibility="Hidden"/>
         </Canvas>
-        <Canvas x:Name="chartpnl" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="727" Margin="26,18,0,0" VerticalAlignment="Top" Width="584" Visibility="Visible">
-            <Label x:Name="expenseAnalysislb"  Foreground="#FF60B64F" Content="Expense Analysis" Canvas.Left="171" Canvas.Top="10" FontSize="24" FontWeight="Bold"/>
-            <Image x:Name="exitgraphpbx" Height="57" Width="53" Source="/exit-icon.png" Canvas.Left="499" Canvas.Top="652" MouseDown="exitgraphpbx_MouseDown"/>
-            <Canvas x:Name="analysispnl" Grid.ColumnSpan="3" Height="527" Margin="29,71,0,0" Width="510" IsVisibleChanged="Canvas_IsVisibleChanged" Visibility="Visible" Canvas.Top="10" Canvas.Left="10" d:DataContext="{d:DesignInstance Type={x:Type local:MainViewModel}}" />
-
+        <Canvas x:Name="analysispnl" Grid.ColumnSpan="3" Margin="49,33,-609,32" IsVisibleChanged="Canvas_IsVisibleChanged" Visibility="Hidden"  >
+            <Label x:Name="expenseAnalysislb"  Foreground="#FF60B64F" Content="Expense Analysis" FontSize="24" FontWeight="Bold" Height="39" Canvas.Left="143" Canvas.Top="10" Width="244"/>
+            <Image x:Name="exitgraphpbx" Source="/exit-icon.png" MouseDown="exitgraphpbx_MouseDown" Height="57" Canvas.Left="482" Canvas.Top="617" Width="53"/>
         </Canvas>
 
     </Grid>
