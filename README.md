@@ -64,72 +64,8 @@ The final part of the POE asks that the user be able to choose whether they have
 
 On starting the app the use will see the welcome screen.
 
-![Main Screen](./Solution Images/MainScreen.png "Welcome Screen")
+![Main Screen](./SolutionImages/MainScreen.png "Welcome Screen")
 
-- - - -
-If they click get started they will be directed to the home screen.
-- - - -
-![Home Screen](./SolutionImages/Home.png "Home Screen")
-
-- - - -
-If the user clicks on the coin icon they will be redirected to the expense page.
-- - - -
- ![Expense](./SolutionImages/Expense.png "Expense Screen")
- 
-- - - -
- If the user clicks on the editing icon they will be able to input values.
- - - - -
- ![Input Value](./SolutionImages/EditExpense.png "Editing Values")
- 
- - - - -
-When the user clicks the next icon they will be directed to the accomodation page, 
-where they can choose to rent or buy.
-- - - -
- ![Rent](./SolutionImages/Renting.png "Renting Screen")
- 
- ![Buy](./SolutionImages/Buying.png "Buying Screen")
- 
-- - - - 
-Now, the user can decide if they are buying a vehicle or not.
-- - - -
- ![Buying](./SolutionImages/BuyVehicle.png "Buying Vehicle Screen")
- 
- ![Not Buying](./SolutionImages/NoVehicle.png "Not Buying Vehicle Screen")
- 
-- - - - 
- When they click complete they will be directed back to the home page whre they will receive a summary of their expenses
-- - - - 
-  ![Summary](./SolutionImages/Summary.png "Summary")
-  
-
-
-  
-
-
-- - - -
-  If they click on the bell icon, it will direct them to the notification page and show them if they notifications.
-- - - -   
-  ![Notifications](./SolutionImages/BellIcon.png "Notification Screen")
-
-
-- - - -
-  The notification has been updated to display the date and time.
-- - - -
-  ![Notifications Updated](./SolutionImages/UpdatedNotification.png "Notification Screen Updated")
-
-
-- - - -
-  If the user's expenses exceed 75% of their income they receive a notification.
-- - - -
-  ![Notifications Exceed](./SolutionImages/Exceeds75Notif.png "User's expenses exceed 75% of Income Notification")
-
-- - - -
-  If they enter something in the search bar they will be redirected to the results page.
-- - - -   
-  ![Results](./SolutionImages/searchResults.png "Search Results")
-  
-- - - -
-  
 ### Extra Features
   
   Some extra features in this app include:
