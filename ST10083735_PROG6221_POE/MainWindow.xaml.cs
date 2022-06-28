@@ -103,6 +103,7 @@ namespace ST10083735_PROG6221_POE
             other = Convert.ToDouble(othertxt.Text);
             cell = Convert.ToDouble(celltxt.Text);
 
+            //initialize values to 0
             double monthlyRent = 0;
             double purchasePrice = 0;
             double deposit = 0;
@@ -115,8 +116,7 @@ namespace ST10083735_PROG6221_POE
             bool interestRateValid = false;
 
 
-            amountslb.Content = "";
-            summaryInfolb.Content = "";
+            
 
             if (rentgrp.IsChecked == false && buygrp.IsChecked == false)
             {
@@ -399,153 +399,7 @@ namespace ST10083735_PROG6221_POE
 
         }
 
-        //Add doughnut chart
-        private void Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            //Add data inputted by the user into the data model class
-            populateData();
-
-            //Code Attribution
-            //Link: https://help.syncfusion.com/wpf/sunburst-chart/overview
-            //Author: SyncFusion
-
-            //Create the donut chart
-            SfSunburstChart sunburst1 = new SfSunburstChart
-            {
-                ValueMemberPath = "Amount",
-                Header = "Portion of Income Spent on Expenses",
-                FontSize = 18,
-                InnerRadius = 0.5,
-                Height = 450,
-                Width = 492,
-
-            };
-
-           
-            //Add a custom color pallette
-            SunburstColorModel colorModel = new SunburstColorModel();
-            LinearGradientBrush brush1 = new LinearGradientBrush();
-            brush1.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(121, 173, 220), Offset = 0 });
-
-
-            LinearGradientBrush brush2 = new LinearGradientBrush();
-            brush2.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(255, 192, 159), Offset = 0 });
-
-
-            LinearGradientBrush brush3 = new LinearGradientBrush();
-            brush3.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(173, 247, 182), Offset = 0 });
-
-
-            LinearGradientBrush brush4 = new LinearGradientBrush();
-            brush4.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(255, 136, 220), Offset = 0 });
-
-            LinearGradientBrush brush5 = new LinearGradientBrush();
-            brush5.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(208, 0, 0), Offset = 0 });
-
-            LinearGradientBrush brush6 = new LinearGradientBrush();
-            brush6.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(0, 56, 68), Offset = 0 });
-
-            LinearGradientBrush brush7 = new LinearGradientBrush();
-            brush7.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(250, 188, 42), Offset = 0 });
-
-            LinearGradientBrush brush8 = new LinearGradientBrush();
-            brush8.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(252, 170, 103), Offset = 0 });
-
-            LinearGradientBrush brush9 = new LinearGradientBrush();
-            brush9.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(140, 83, 131), Offset = 0 });
-
-            LinearGradientBrush brush10 = new LinearGradientBrush();
-            brush10.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(255, 231, 76), Offset = 0 });
-
-            colorModel.CustomBrushes.Add(brush1);
-            colorModel.CustomBrushes.Add(brush2);
-            colorModel.CustomBrushes.Add(brush3);
-            colorModel.CustomBrushes.Add(brush4);
-            colorModel.CustomBrushes.Add(brush5);
-            colorModel.CustomBrushes.Add(brush6);
-            colorModel.CustomBrushes.Add(brush7);
-            colorModel.CustomBrushes.Add(brush8);
-            colorModel.CustomBrushes.Add(brush9);
-            colorModel.CustomBrushes.Add(brush10);
-
-            //Add the color model to the chart
-            sunburst1.ColorModel = colorModel;
-            sunburst1.Palette = SunburstColorPalette.Custom;
-
-            //Bind the chart with the data
-            sunburst1.SetBinding(SfSunburstChart.ItemsSourceProperty, "Data");
-            sunburst1.Levels.Add(new SunburstHierarchicalLevel() { GroupMemberPath = "Expense" });
-
-            //Chart Legend Customization
-            SunburstLegend legend = new SunburstLegend
-            {
-                DockPosition = ChartDock.Left,
-                FontSize = 16,
-                ClickAction = LegendClickAction.ToggleSegmentVisibility
-            };
-
-            //Add legend to chart
-            sunburst1.Legend = legend;
-
-            //Add tool tips to chart
-            SunburstToolTipBehavior tooltip = new SunburstToolTipBehavior();
-            tooltip.ShowToolTip = true;
-            sunburst1.Behaviors.Add(tooltip);
-
-            sunburst1.DataContext = newModel;
-            Canvas.SetLeft(sunburst1, 10);
-            Canvas.SetTop(sunburst1, 91);
-            analysispnl.Children.Add(sunburst1);
-            //analysispnl.Children.Add(expenseAnalysislb);
-           // analysispnl.Children.Add(exitgraphpbx);
-
-            
-            
-           
-            //End Code attribution
-        }
-
-        public void populateData()
-        {
-            //Add user input data to the expense model to be displayed on the doughnut chart
-            List<ExpensesModel> addData = new List<ExpensesModel>
-                {
-                    new ExpensesModel { Expense = "Tax",Amount = addIncome.Tax },
-                    new ExpensesModel { Expense = "Groceries",Amount = ReturnChosenObj().Groceries },
-                    new ExpensesModel { Expense = "Water and Lights", Amount = ReturnChosenObj().Utilities },
-                    new ExpensesModel { Expense = "Travel", Amount = ReturnChosenObj().Travel },
-                    new ExpensesModel { Expense = "Phone", Amount = ReturnChosenObj().Phone },
-                    new ExpensesModel { Expense = "Other", Amount =  ReturnChosenObj().Other }
-                };
-
-            //Add rent data if the user chose to rent
-            if (rentgrp.IsChecked == true)
-            {
-
-                addData.Add(new ExpensesModel { Expense = "Rent", Amount = addRentExpense.MonthlyRent });
-            }
-            else
-            {
-                //Add buy data if the user chose to buy
-                addData.Add(new ExpensesModel { Expense = "Deposit", Amount = addBuyingExpense.TotalDeposit });
-                addData.Add(new ExpensesModel { Expense = "Monthly Repayment(Home)", Amount = addBuyingExpense.calcMonthlyRepayment() });
-            }
-
-            //Add vehicle data if the user chose to buy a vehicle
-            if (yesrbtn.IsChecked == true)
-            {
-                addData.Add(new ExpensesModel { Expense = "Vehicle Repayment", Amount = addVehicle.totalMonthlyCost() });
-            }
-
-            //Add savings data if the user chose to save money
-            if (yesSavebtn.IsChecked == true)
-            {
-                addData.Add(new ExpensesModel { Expense = "Savings Deposit(Per Month)", Amount = addSavings.totalCost() });
-            }
-
-            //add the list to the data model
-            newModel.Data = addData;
-        }
+        
 
         //Create delegate for the function that
         //checks if the user's total expenses exceeds 75% of their income
@@ -580,6 +434,7 @@ namespace ST10083735_PROG6221_POE
 
         private void completeAnalysis()
         {
+            
             //populate the dictionary
             fillDictionary();
 
@@ -812,27 +667,153 @@ namespace ST10083735_PROG6221_POE
             return roudedMoneyLeftOver;
         }
 
-        private void startbtn_Click(object sender, RoutedEventArgs e)
+        //Add doughnut chart
+        private void Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            //show home panel
-            mainpnl.Visibility = Visibility.Hidden;
-            homepnl.Visibility = Visibility.Visible;
+            //Add data inputted by the user into the data model class
+            populateData();
 
+            //Code Attribution
+            //Link: https://help.syncfusion.com/wpf/sunburst-chart/overview
+            //Author: SyncFusion
+
+            //Create the donut chart
+            SfSunburstChart sunburst1 = new SfSunburstChart
+            {
+                ValueMemberPath = "Amount",
+                Header = "Portion of Income Spent on Expenses",
+                FontSize = 18,
+                InnerRadius = 0.5,
+                Height = 450,
+                Width = 492,
+
+            };
+
+
+            //Add a custom color pallette
+            SunburstColorModel colorModel = new SunburstColorModel();
+            LinearGradientBrush brush1 = new LinearGradientBrush();
+            brush1.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(121, 173, 220), Offset = 0 });
+
+
+            LinearGradientBrush brush2 = new LinearGradientBrush();
+            brush2.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(255, 192, 159), Offset = 0 });
+
+
+            LinearGradientBrush brush3 = new LinearGradientBrush();
+            brush3.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(173, 247, 182), Offset = 0 });
+
+
+            LinearGradientBrush brush4 = new LinearGradientBrush();
+            brush4.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(255, 136, 220), Offset = 0 });
+
+            LinearGradientBrush brush5 = new LinearGradientBrush();
+            brush5.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(208, 0, 0), Offset = 0 });
+
+            LinearGradientBrush brush6 = new LinearGradientBrush();
+            brush6.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(0, 56, 68), Offset = 0 });
+
+            LinearGradientBrush brush7 = new LinearGradientBrush();
+            brush7.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(250, 188, 42), Offset = 0 });
+
+            LinearGradientBrush brush8 = new LinearGradientBrush();
+            brush8.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(252, 170, 103), Offset = 0 });
+
+            LinearGradientBrush brush9 = new LinearGradientBrush();
+            brush9.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(140, 83, 131), Offset = 0 });
+
+            LinearGradientBrush brush10 = new LinearGradientBrush();
+            brush10.GradientStops.Add(new GradientStop() { Color = Color.FromRgb(255, 231, 76), Offset = 0 });
+
+            colorModel.CustomBrushes.Add(brush1);
+            colorModel.CustomBrushes.Add(brush2);
+            colorModel.CustomBrushes.Add(brush3);
+            colorModel.CustomBrushes.Add(brush4);
+            colorModel.CustomBrushes.Add(brush5);
+            colorModel.CustomBrushes.Add(brush6);
+            colorModel.CustomBrushes.Add(brush7);
+            colorModel.CustomBrushes.Add(brush8);
+            colorModel.CustomBrushes.Add(brush9);
+            colorModel.CustomBrushes.Add(brush10);
+
+            //Add the color model to the chart
+            sunburst1.ColorModel = colorModel;
+            sunburst1.Palette = SunburstColorPalette.Custom;
+
+            //Bind the chart with the data
+            sunburst1.SetBinding(SfSunburstChart.ItemsSourceProperty, "Data");
+            sunburst1.Levels.Add(new SunburstHierarchicalLevel() { GroupMemberPath = "Expense" });
+
+            //Chart Legend Customization
+            SunburstLegend legend = new SunburstLegend
+            {
+                DockPosition = ChartDock.Left,
+                FontSize = 16,
+                ClickAction = LegendClickAction.ToggleSegmentVisibility
+            };
+
+            //Add legend to chart
+            sunburst1.Legend = legend;
+
+            //Add tool tips to chart
+            SunburstToolTipBehavior tooltip = new SunburstToolTipBehavior();
+            tooltip.ShowToolTip = true;
+            sunburst1.Behaviors.Add(tooltip);
+
+            sunburst1.DataContext = newModel;
+            Canvas.SetLeft(sunburst1, 10);
+            Canvas.SetTop(sunburst1, 91);
+            analysispnl.Children.Add(sunburst1);
+
+
+            //End Code attribution
         }
 
-        private void searchBarbtn_Click(object sender, RoutedEventArgs e)
+        public void populateData()
         {
-            //allow user to input a search term
-            searchtxt.Visibility = Visibility.Visible;
-            searchtxt.Focus();
-            searchBarbtn.IsEnabled = false;
+            //Add user input data to the expense model to be displayed on the doughnut chart
+            List<ExpensesModel> addData = new List<ExpensesModel>
+                {
+                    new ExpensesModel { Expense = "Tax",Amount = addIncome.Tax },
+                    new ExpensesModel { Expense = "Groceries",Amount = ReturnChosenObj().Groceries },
+                    new ExpensesModel { Expense = "Water and Lights", Amount = ReturnChosenObj().Utilities },
+                    new ExpensesModel { Expense = "Travel", Amount = ReturnChosenObj().Travel },
+                    new ExpensesModel { Expense = "Phone", Amount = ReturnChosenObj().Phone },
+                    new ExpensesModel { Expense = "Other", Amount =  ReturnChosenObj().Other }
+                };
+
+            //Add rent data if the user chose to rent
+            if (rentgrp.IsChecked == true)
+            {
+
+                addData.Add(new ExpensesModel { Expense = "Rent", Amount = addRentExpense.MonthlyRent });
+            }
+            else
+            {
+                //Add buy data if the user chose to buy
+                addData.Add(new ExpensesModel { Expense = "Home Deposit", Amount = addBuyingExpense.TotalDeposit });
+                addData.Add(new ExpensesModel { Expense = "Home Repayment", Amount = addBuyingExpense.calcMonthlyRepayment() });
+            }
+
+            //Add vehicle data if the user chose to buy a vehicle
+            if (yesrbtn.IsChecked == true)
+            {
+                addData.Add(new ExpensesModel { Expense = "Vehicle Repayment", Amount = addVehicle.totalMonthlyCost() });
+                addData.Add(new ExpensesModel { Expense = "Vehicle Deposit", Amount = addVehicle.Deposit });
+
+            }
+
+            //Add savings data if the user chose to save money
+            if (yesSavebtn.IsChecked == true)
+            {
+                addData.Add(new ExpensesModel { Expense = "Savings Deposit(Per Month)", Amount = addSavings.totalCost() });
+            }
+
+            //add the list to the data model
+            newModel.Data = addData;
         }
 
-        private void exitimg_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            //exit application
-            System.Windows.Application.Current.Shutdown();
-        }
+        
 
         private void bellpbx_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -862,7 +843,7 @@ namespace ST10083735_PROG6221_POE
 
             switch (notiflb2.Content)
             {
-                case string info when (info.Contains("Your total expenses exceed 75% of your income.")):
+                case string info when info.Contains("Your total expenses exceed 75% of your income."):
                     notiflb2.Content = "Your total expenses exceed 75% of your income.\n" + now.ToString("F");
                     break;
 
@@ -872,7 +853,7 @@ namespace ST10083735_PROG6221_POE
         //Return the object the user chose either rent or buying
         private Expense ReturnChosenObj()
         {
-            Rent ifObjectWasNotCreated = new Rent(0, 0, 0, 0, 0, 0);
+            Rent ifObjectWasNotCreated = new(0, 0, 0, 0, 0, 0);
             if (rentgrp.IsChecked == true)
             {
                 return addRentExpense;
@@ -889,9 +870,11 @@ namespace ST10083735_PROG6221_POE
 
         }
 
-
+        
+        //Function called when the user either hits enter in the search text box or when they click on the search button
         private void searchFunction()
         {
+            //Hide the label that says no results found
             noResultslb.Visibility = Visibility.Hidden;
 
             resultslb.Content = "Results for";
@@ -1062,7 +1045,9 @@ namespace ST10083735_PROG6221_POE
             double percentage = 0;
             percentage = (expense / (addIncome.GrossIncome)) * 100;
             percentage = Math.Round(percentage, 2);
-            if (percentage.Equals(double.NaN))
+
+            //if the percentage is Nan or positive or negative infity set it to 0
+            if (percentage.Equals(double.NaN) || Double.IsPositiveInfinity(percentage) == true || Double.IsNegativeInfinity(percentage) == true)
             {
                 percentage = 0;
             }
@@ -1118,9 +1103,35 @@ namespace ST10083735_PROG6221_POE
             {
                 costLabel.Visibility = Visibility.Hidden;
                 input.Visibility = Visibility.Visible;
-                input.Focus();
+                //set focus to the textbox the user wants to input
+                input.Focusable = true;
+                Keyboard.Focus(input);
+                //move the cursor to the end of the textbox
+                input.Select(input.Text.Length, 0);
 
             }
+        }
+
+        private void startbtn_Click(object sender, RoutedEventArgs e)
+        {
+            //show home panel
+            mainpnl.Visibility = Visibility.Hidden;
+            homepnl.Visibility = Visibility.Visible;
+
+        }
+
+        private void searchBarbtn_Click(object sender, RoutedEventArgs e)
+        {
+            //allow user to input a search term
+            searchtxt.Visibility = Visibility.Visible;
+            searchtxt.Focus();
+            searchBarbtn.IsEnabled = false;
+        }
+
+        private void exitimg_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //exit application
+            System.Windows.Application.Current.Shutdown();
         }
 
         private void exitNotifpb_MouseDown(object sender, MouseButtonEventArgs e)

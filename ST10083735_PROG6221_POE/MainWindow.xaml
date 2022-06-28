@@ -76,9 +76,9 @@
             <TextBox x:Name="searchtxt" Canvas.Left="58" Canvas.Top="100" Text=""  TextWrapping="Wrap" Width="274" Height="31" Background="#FFF2F2F2" Foreground="#FF60B64F" BorderThickness="0" BorderBrush="#FFF2F2F2" SelectionBrush="#FF1647CE" VerticalContentAlignment="Center" FontSize="16" Visibility="Hidden" KeyDown="searchtxt_KeyDown"/>
             <Image x:Name="searchpbx" Height="43" Canvas.Left="377" Canvas.Top="94" Width="44" Source="/search-icon.png" RenderTransformOrigin="-0.178,0.505" MouseDown="searchpbx_MouseDown"/>
             <Label x:Name="summarylb" Content="Summary" Height="48" Canvas.Left="24" Canvas.Top="183" Width="171" FontSize="30" FontWeight="Normal"/>
-            <Label x:Name="summaryInfolb" Content="Income:&#xA;Tax:&#xA;Groceries:&#xA;Water and lights:&#xA;Travel:&#xA;Cellphone/telephone:&#xA;Other:" Height="302" Canvas.Left="24" Canvas.Top="247" Width="313" FontSize="22" FontFamily="Calibri Light" />
-            <Label x:Name="amountslb" Content="R0&#xA;R0&#xA;R0&#xA;R0&#xA;R0&#xA;R0&#xA;R0" Height="302" Canvas.Left="337" Canvas.Top="247" Width="266" FontSize="22" FontFamily="Calibri" FontWeight="Bold" Foreground="#FF60B64F" />
-            <RichTextBox x:Name="analysisCostsrtbx" Height="101" Canvas.Left="24" Canvas.Top="574" Width="377" BorderBrush="White" IsReadOnly="True" BorderThickness="0" FontFamily="Calibri Light" FontSize="18" RenderTransformOrigin="0.5,0.5">
+            <Label x:Name="summaryInfolb" Content="Income:&#xA;Tax:&#xA;Groceries:&#xA;Water and lights:&#xA;Travel:&#xA;Cellphone/telephone:&#xA;Other:" Height="320" Canvas.Left="24" Canvas.Top="247" Width="313" FontSize="22" FontFamily="Calibri Light" />
+            <Label x:Name="amountslb" Content="R0&#xA;R0&#xA;R0&#xA;R0&#xA;R0&#xA;R0&#xA;R0" Height="320" Canvas.Left="337" Canvas.Top="247" Width="266" FontSize="22" FontFamily="Calibri" FontWeight="Bold" Foreground="#FF60B64F" />
+            <RichTextBox x:Name="analysisCostsrtbx" Canvas.Left="24" Canvas.Top="574" Width="377" BorderBrush="White" IsReadOnly="True" BorderThickness="0" FontFamily="Calibri Light" FontSize="18" RenderTransformOrigin="0.5,0.5">
                 <RichTextBox.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -153,11 +153,11 @@
             <Label x:Name="notiflb2" Content="Nothing here yet." Height="86" Canvas.Left="86" Canvas.Top="220" Width="414" FontFamily="Calibri" FontSize="20" Visibility="Collapsed"/>
             <Image x:Name="exitNotifpb" Height="49" Canvas.Left="544" Canvas.Top="675" Width="49" Source="/exit-icon.png" RenderTransformOrigin="0.62,0.789" MouseDown="exitNotifpb_MouseDown"/>
         </Canvas>
-        <Canvas x:Name="searchpnl" HorizontalAlignment="Left" Height="745" Margin="12,0,0,0" VerticalAlignment="Top" Width="622" Visibility="Visible" Grid.ColumnSpan="3">
+        <Canvas x:Name="searchpnl" HorizontalAlignment="Left" Height="745" Margin="12,0,0,0" VerticalAlignment="Top" Width="622" Visibility="Hidden" Grid.ColumnSpan="3">
             <Label x:Name="resultslb" Content="Results for " Canvas.Left="10" Canvas.Top="10" FontSize="30" FontWeight="Normal" RenderTransformOrigin="4.778,1.607"/>
             <Image x:Name="searchResultspbx" Height="63" Canvas.Left="17" Canvas.Top="103" Width="71" Source="/search-icon.png" Visibility="Hidden"/>
             <Label x:Name="resultNamelb" Content="Results Text Here." Canvas.Left="106" Canvas.Top="103" FontSize="20" Visibility="Hidden"/>
-            <Label x:Name="resultCostlb" Content="R0" Canvas.Left="106" Canvas.Top="139" FontSize="18" FontWeight="Bold" Foreground="#FF60B64F" Visibility="Hidden"/>
+            <Label x:Name="resultCostlb" Content="R0" Canvas.Left="106" Canvas.Top="139" FontSize="18" FontWeight="Bold" Foreground="#FF60B64F" Visibility="Hidden" Height="34"/>
             <Image x:Name="exitSearchpbx" Height="49" Canvas.Left="541" Canvas.Top="676" Width="49" Source="/exit-icon.png" MouseDown="exitSearchpbx_MouseDown" RenderTransformOrigin="0.62,0.789"/>
             <RichTextBox x:Name="aboutrtb" Height="105" Canvas.Left="106" Canvas.Top="171" Width="379" BorderBrush="White" IsReadOnly="True" BorderThickness="0" FontFamily="Verdana" FontSize="20" Visibility="Hidden">
                 <FlowDocument>
