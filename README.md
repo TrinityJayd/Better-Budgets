@@ -190,7 +190,8 @@ If the user clicks the bell icon they will be redirected to the notification pag
 
 - - - -
 
-If they enter something in the search bar they will be redirected to the results page.
+If they enter something in the search bar they will be redirected to the results page. Once the user enters all their expense information, the search results will show how much of their income they have spent on the expense.
+
 
 - - - -   
 
@@ -200,15 +201,6 @@ If they enter something in the search bar they will be redirected to the results
 
 - - - -
 
-Once the user enters all their expense information, the search results will show how much their income they have spent on the expense.
-
-- - - -
-
-
-<img src="SolutionImages/UpdatedSearchResult.png" alt="drawing" width="500" height="600" />
-
-
-- - - -
 
 If there are no search results it will be displayed that nothing was found.
 
