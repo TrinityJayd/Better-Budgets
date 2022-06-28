@@ -64,22 +64,18 @@ The final part of the POE asks that the user be able to choose whether they have
 - - - -
 On starting the app the use will see the welcome screen.
 - - - -
-<img src="SolutionImages/MainScreen.png" alt="drawing" width="200"/>
+<img src="SolutionImages/MainScreen.png" alt="drawing" width="500" height="600" />
 
 - - - -
 If they click get started they will be directed to the home screen.
 - - - -
-![Home Screen](./SolutionImages/Home.png "Home Screen")
-
+<img src="SolutionImages/Home.png" alt="drawing" width="500" height="600" />
 - - - -
 (03/06/2022)The home screen has been updated as such to sort the expenses in descending order. But the income will always remain at the top of the display. 
 - - - -
-![Home Screen Updated](./SolutionImages/UpdatedHome.png "Home Screen Descending Order")
-
+<img src="SolutionImages/UpdatedHome.png" alt="drawing" width="500" height="600" />
 - - - -
 ![Home Screen Updated](./SolutionImages/HomeAsc.png "Home Screen Ascending Order")
-
-
 - - - -
 If the user clicks on the coin icon they will be redirected to the expense page.
 - - - -
