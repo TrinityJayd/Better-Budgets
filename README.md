@@ -48,7 +48,7 @@ The Dictionary of expenses is then sorted in descending order and displayed to t
 Main Feature of POE: Savings 
 This project was last updated on 28/06/2022. The scenario for the final part of the POE has included more features.
 
-The final part of the POE asks that the user be able to choose whether they have a savings account or not. If they have a savings account they will be asked to enter the cars:
+The final part of the POE asks that the user be able to choose whether they have a savings account or not. If they have a savings account they will be asked to enter the :
  - Reason they want to save
  - Total amount they want to accumulate
  - How long they want to save for in years
