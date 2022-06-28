@@ -64,7 +64,7 @@ The final part of the POE asks that the user be able to choose whether they have
 
 On starting the app the use will see the welcome screen.
 
-![Home Screen](./Solution Images/MainScreen.png "Welcome Screen")
+![Main Screen](./SolutionImages/MainScreen.PNG "Welcome Screen")
 
 - - - -
 If they click get started they will be directed to the home screen.
